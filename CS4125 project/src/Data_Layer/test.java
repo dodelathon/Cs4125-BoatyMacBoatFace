@@ -4,11 +4,18 @@
  * and open the template in the editor.
  */
 package Data_Layer;
-
+import java.sql.SQLException;
 /**
  *
  * @author donal
  */
-public class test {
-    
+public class test 
+{
+    public static void main(String[] args) throws Exception
+    {
+        MySqlAccess meep = new MySqlAccess();
+        meep.insertRowIntoLoginInfo("beep", "shabalabadingdong", 0);
+        meep.insertRowIntoLoginInfo("beep", "shabalabadingdong", 0);
+        meep.insertRowIntoLoginInfo("bep", "shabalabadingdong", 0);
+    }
 }

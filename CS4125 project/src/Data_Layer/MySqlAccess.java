@@ -43,21 +43,21 @@ public class MySqlAccess
       {
           if(isDev == 0)
         {
-            preparedStatement = connect.prepareStatement("insert into  userDetails values (default, ?, ?, default)");
+            preparedStatement = connect.prepareStatement("insert into login_info values (default, ?, ?, default)");
             preparedStatement.setString(1, uName);
             preparedStatement.setString(2, password);
-            insertRowIntoMatchmakingInfo(uName, 0);
             preparedStatement.executeUpdate();
+            insertRowIntoMatchmakingInfo(uName, 0);
             System.out.println("User has been added to the login Database!");
         }
         else if(isDev == 1)
         {
-            preparedStatement = connect.prepareStatement("insert into  userDetails values (default, ?, ?, ?)");
+            preparedStatement = connect.prepareStatement("insert into login_info values (default, ?, ?, ?)");
             preparedStatement.setString(1, uName);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, isDev + "");
-            insertRowIntoMatchmakingInfo(uName, 0);
             preparedStatement.executeUpdate();
+            insertRowIntoMatchmakingInfo(uName, 0);
             System.out.println("User has been added to the login Database!");
         }
       }
@@ -70,7 +70,7 @@ public class MySqlAccess
   private void insertRowIntoMatchmakingInfo(String uName, int rating) throws Exception
   {
       
-    preparedStatement = connect.prepareStatement("insert into games values (default, ?, ?, default)");
+    preparedStatement = connect.prepareStatement("insert into matchmaker_info values (LAST_INSERT_ID(), ?, ?, default)");
     preparedStatement.setString(1, uName );
     preparedStatement.setString(2, rating + "");
     preparedStatement.executeUpdate();
@@ -106,10 +106,11 @@ public class MySqlAccess
   
   private boolean isUsernameUsed(String uName) throws SQLException
   {
-      preparedStatement = connect.prepareStatement("select * from where usernameLog=?");
+      preparedStatement = connect.prepareStatement("select * from login_info where usernameLog=?");
       preparedStatement.setString(1, uName);
       resultSet = preparedStatement.executeQuery();
-      if(resultSet.getString("usernameLog").equals(""))
+      //System.out.println(resultSet.first());
+      if(resultSet.first() == true)
       {
           return true;
       }
