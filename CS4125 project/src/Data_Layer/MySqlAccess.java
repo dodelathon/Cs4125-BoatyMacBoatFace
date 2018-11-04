@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 
 public class MySqlAccess 
 {
@@ -22,7 +21,7 @@ public class MySqlAccess
 
   public MySqlAccess()throws Exception
   {
-      connectDB("localhost","sqluser","donal", "users");
+      connectDB("localhost","Donal","Zippingdonal07", "userdetails");
   }
   public MySqlAccess(String user, String Pass, String db, String domain)throws Exception
   {
@@ -38,70 +37,85 @@ public class MySqlAccess
       statement = connect.createStatement();
   }
   
-  public void insertRowIntoUser(String name, String surname, String username, String password, String email, int access) throws Exception
+  public void insertRowIntoLoginInfo(String uName, String password, int isDev) throws Exception
   {
-      preparedStatement = connect.prepareStatement("insert into  users.user values (default, ?, ?, ?, PASSWORD(?) , default, ?)");
-      preparedStatement.setString(1, name);
-      preparedStatement.setString(2, surname);
-      preparedStatement.setString(3, username);
-      preparedStatement.setString(4, password);
-      preparedStatement.setString(5, email);
-      preparedStatement.setString(6, access + "");
-      preparedStatement.executeUpdate();
-      System.out.println("Item has been added to the Database!");
-  }
-  
-  public void insertRowIntoGames(int id1, int id2) throws Exception
-  {
-      if(id1 != id2)
+      if(isUsernameUsed(uName) == false)
       {
-        preparedStatement = connect.prepareStatement("insert into games values (default, ?, ?, default)");
-        preparedStatement.setString(1, id1 + "");
-        preparedStatement.setString(2, id2 + "");
-        preparedStatement.executeUpdate();
-        System.out.println("Item has been added to the Database!");
+          if(isDev == 0)
+        {
+            preparedStatement = connect.prepareStatement("insert into  userDetails values (default, ?, ?, default)");
+            preparedStatement.setString(1, uName);
+            preparedStatement.setString(2, password);
+            insertRowIntoMatchmakingInfo(uName, 0);
+            preparedStatement.executeUpdate();
+            System.out.println("User has been added to the login Database!");
+        }
+        else if(isDev == 1)
+        {
+            preparedStatement = connect.prepareStatement("insert into  userDetails values (default, ?, ?, ?)");
+            preparedStatement.setString(1, uName);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, isDev + "");
+            insertRowIntoMatchmakingInfo(uName, 0);
+            preparedStatement.executeUpdate();
+            System.out.println("User has been added to the login Database!");
+        }
       }
       else
       {
-          System.out.println("Player cannot play against self");
+          System.out.println("Username is already take, Please enter another");
       }
   }
   
-  public void insertRowIntoMoves(int gameId, int playerId, int x, int y) throws SQLException
+  private void insertRowIntoMatchmakingInfo(String uName, int rating) throws Exception
   {
-      if(moveMade(x, y) == false)
-      {
-        preparedStatement = connect.prepareStatement("insert into moves values (default, ?, ?, ?, ?)");
-        preparedStatement.setString(1, gameId + "");
-        preparedStatement.setString(2, playerId + "");
-        preparedStatement.setString(3, x + "");
-        preparedStatement.setString(4, y + "");
-        preparedStatement.executeUpdate();
-        System.out.println("Item has been added to the Database!");
-      }
-      else
-      {
-          System.out.println("cannot insert as this move has already been played!");
-      }
+      
+    preparedStatement = connect.prepareStatement("insert into games values (default, ?, ?, default)");
+    preparedStatement.setString(1, uName );
+    preparedStatement.setString(2, rating + "");
+    preparedStatement.executeUpdate();
+    System.out.println("User has been added to the Matchmaking Database!");
   }
  
-  public void searchDBByID(int id, String db) throws Exception
+  public String searchDBByID(int id, String db) throws Exception
   {
-      preparedStatement = connect.prepareStatement("SELECT * from ? where autoID=?");
-      preparedStatement.setString(1, db);
-      preparedStatement.setString(2, id + "");
+      String res = "";
+      if(db.equalsIgnoreCase("login_info"))
+      {
+        preparedStatement = connect.prepareStatement("SELECT * from ? where userIDLog=?");
+        preparedStatement.setString(1, db);
+        preparedStatement.setString(2, id + "");
+        resultSet = preparedStatement.executeQuery();
+        res = writeResultSet(resultSet, 1);
+        return res;
+      }
+      else if(db.equalsIgnoreCase("matchmaking_info"))
+      {
+        preparedStatement = connect.prepareStatement("SELECT * from ? where userIDMatch=?");
+        preparedStatement.setString(1, db);
+        preparedStatement.setString(2, id + "");
+        resultSet = preparedStatement.executeQuery();
+        res = writeResultSet(resultSet, 2);
+        return res;
+      }
+      else
+      {
+          return res;
+      }
+  }
+  
+  private boolean isUsernameUsed(String uName) throws SQLException
+  {
+      preparedStatement = connect.prepareStatement("select * from where usernameLog=?");
+      preparedStatement.setString(1, uName);
       resultSet = preparedStatement.executeQuery();
-      if(db.equalsIgnoreCase("user"))
+      if(resultSet.getString("usernameLog").equals(""))
       {
-        writeResultSet(resultSet, 1);
+          return true;
       }
-      else if(db.equals("games"))
+      else
       {
-          writeResultSet(resultSet, 2);
-      }
-      else if(db.equals("moves"))
-      {
-          writeResultSet(resultSet, 3);
+          return false;
       }
   }
   
@@ -131,105 +145,63 @@ public class MySqlAccess
     }
   }
   
-  public void deleteFromDB(String db, int input) throws Exception
+  public void deleteUser(int input) throws Exception
   {
-      preparedStatement = connect.prepareStatement("delete from " + db + " where autoID=?;");
+      preparedStatement = connect.prepareStatement("delete from login_info where userIDLog=?;");
+      preparedStatement.setInt(1, input);
+      preparedStatement.executeUpdate();
+      preparedStatement = connect.prepareStatement("delete from matchmaking_info where userIDLog=?;");
       preparedStatement.setInt(1, input);
       preparedStatement.executeUpdate();
   }
   
-  private void writeMetaData(ResultSet resultSet) throws SQLException 
+  public String getPassword(int userID) throws Exception
   {
-    //   Now get some metadata from the database
-    // Result set get the result of the SQL query
-    
-    System.out.println("The columns in the table are: ");
-    
-    System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
-    for(int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++)
-    {
-      System.out.println("Column " + i + " "+ resultSet.getMetaData().getColumnName(i));
-    }
-  }
-  
-  private boolean moveMade(int newX, int newY) throws SQLException
-  {
-      resultSet = statement.executeQuery("select * from moves;");
-      while (resultSet.next()) 
-      {
-            int x = Integer.parseInt(resultSet.getString("x"));
-            //System.out.println(x);
-            int y = Integer.parseInt(resultSet.getString("y"));
-            //System.out.println(y);
-            
-            if(x == newX && y == newY)
-            {
-                //System.out.println("Herer");
-               return true; 
-            }
-      }
-      return false;
+      String res = searchDBByID(userID, "login_info");
+      String [] interim = res.split(" | ");
+      return interim[1].trim();
   }
 
-  private void writeResultSet(ResultSet resultSet, int db) throws SQLException 
+  private String writeResultSet(ResultSet resultSet, int db) throws SQLException 
   {
     // ResultSet is initially before the first data set
+    String hold = "";
     switch(db)
     {
         case 1:
             while (resultSet.next()) 
             {
-        // It is possible to get the columns via name
-        // also possible to get the columns via the column number
-      // which starts at 1
-      // e.g. resultSet.getSTring(2);
-            String id = resultSet.getString("autoID");
-            String name = resultSet.getString("name");
-            String surname = resultSet.getString("surname");
-            String username = resultSet.getString("username");
+            String id = resultSet.getString("userIDLog");
+            String username = resultSet.getString("usernameLog");
             String pass = resultSet.getString("password");
-            String email = resultSet.getString("email");
-            String state = resultSet.getString("isactive");
             String clearance = resultSet.getString("access_level");
-            System.out.println("ID: " + id + " | Name: " + name +" | Surname: " + surname + " | Username: " + username + " | Password: " + pass + " | Email: " + email + " | Is Online: " + state + " | Access level: " + clearance);
+            System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
+            hold = id + " | " + username + " | " + pass + " | " + clearance;
             }
             break;
         
         case 2: 
             while (resultSet.next()) 
             {
-        // It is possible to get the columns via name
-        // also possible to get the columns via the column number
-      // which starts at 1
-      // e.g. resultSet.getSTring(2);
-            String id = resultSet.getString("autoID");
-            String player1 = resultSet.getString("p1");
-            String player2 = resultSet.getString("p2");
-            String state = resultSet.getString("gameState");
-            System.out.println("ID: " + id +" | Player 1: " + player1 + " | Player 2: " + player2 + " | Game State: " + state);
-            }
-            break;
-            
-        case 3: 
-            while (resultSet.next()) 
-            {
-        // It is possible to get the columns via name
-        // also possible to get the columns via the column number
-      // which starts at 1
-      // e.g. resultSet.getSTring(2);
-            String id = resultSet.getString("autoID");
-            String player = resultSet.getString("pID");
-            String game = resultSet.getString("gID");
-            String x = resultSet.getString("x");
-            String y = resultSet.getString("y");
-            System.out.println("ID: " + id +" | Player: " + player + " | GameID: " + game + " | Box X-axis: " + x + " | Box Y-axis: " + y);
-            }
-            break;
-    }
+            String id = resultSet.getString("userIDMatch");
+            String Uname = resultSet.getString("usernameMatch");
+            String rating = resultSet.getString("rating");
+            String online = resultSet.getString("is_online");
+            System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
+            hold = id + " | " + Uname + " | " + rating + " | " + online;
+            } 
+            break; 
+        }
+    return hold;
   }
 
+
   // You need to close the resultSet
-  private void close() 
+
+    /**
+     *
+     */
+  public void close() 
   {
     try {
       if (resultSet != null) 
