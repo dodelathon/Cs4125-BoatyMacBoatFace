@@ -17,5 +17,7 @@ public class test
         meep.insertRowIntoLoginInfo("beep", "shabalabadingdong", 0);
         meep.insertRowIntoLoginInfo("beep", "shabalabadingdong", 0);
         meep.insertRowIntoLoginInfo("bep", "shabalabadingdong", 0);
+        meep.deleteUser(1);
+        meep.deleteUser(2);
     }
 }

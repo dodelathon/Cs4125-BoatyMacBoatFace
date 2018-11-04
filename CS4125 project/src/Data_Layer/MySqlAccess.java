@@ -151,9 +151,6 @@ public class MySqlAccess
       preparedStatement = connect.prepareStatement("delete from login_info where userIDLog=?;");
       preparedStatement.setInt(1, input);
       preparedStatement.executeUpdate();
-      preparedStatement = connect.prepareStatement("delete from matchmaking_info where userIDLog=?;");
-      preparedStatement.setInt(1, input);
-      preparedStatement.executeUpdate();
   }
   
   public String getPassword(int userID) throws Exception
