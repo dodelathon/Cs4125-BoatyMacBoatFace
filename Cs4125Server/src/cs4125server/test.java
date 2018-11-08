@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data_Layer;
+package cs4125server;
+import cs4125server.MySqlAccess;
 import java.sql.SQLException;
 /**
  *
@@ -16,8 +17,9 @@ public class test
         MySqlAccess meep = new MySqlAccess();
         meep.insertRowIntoLoginInfo("beep", "shabalabadingdong", 0);
         meep.insertRowIntoLoginInfo("beep", "shabalabadingdong", 0);
-        meep.insertRowIntoLoginInfo("bep", "shabalabadingdong", 0);
-        meep.deleteUser(1);
-        meep.deleteUser(2);
+        meep.insertRowIntoLoginInfo("bepe", "shabalabadingdong", 1);
+        System.out.println(meep.readAllFromDB("login_info"));
+        System.out.println(meep.isPlayerDev("bepe"));
+        System.out.println(meep.getPassword("beep"));
     }
 }

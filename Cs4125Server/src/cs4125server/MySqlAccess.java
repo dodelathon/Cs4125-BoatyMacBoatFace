@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data_Layer;
+package cs4125server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -104,6 +104,51 @@ public class MySqlAccess
       }
   }
   
+  public boolean isPlayerDev(String name) throws Exception
+  {
+     String result = searchDBByName(name, "login_info");
+     String interim[] = result.split(",");
+     if(Integer.parseInt(interim[3].trim()) == 0)
+     {
+         return false;
+     }
+     else if(Integer.parseInt(interim[3].trim()) == 1)
+     {
+        return true; 
+     }
+     else
+     {
+        return false;
+     }
+  }
+  
+  public String searchDBByName(String name, String db) throws Exception
+  {
+      String res = "";
+      if(db.equalsIgnoreCase("login_info"))
+      {
+        preparedStatement = connect.prepareStatement("SELECT * from " + db + " where usernameLog=?");
+        //preparedStatement.setString(1, db);
+        preparedStatement.setString(1, name);
+        resultSet = preparedStatement.executeQuery();
+        res = writeResultSet(resultSet, 1);
+        return res;
+      }
+      else if(db.equalsIgnoreCase("matchmaking_info"))
+      {
+        preparedStatement = connect.prepareStatement("SELECT * from " + db + " where usernameMatch=?");
+       // preparedStatement.setString(1, db);
+        preparedStatement.setString(1, name);
+        resultSet = preparedStatement.executeQuery();
+        res = writeResultSet(resultSet, 2);
+        return res;
+      }
+      else
+      {
+          return res;
+      }
+  }
+  
   private boolean isUsernameUsed(String uName) throws SQLException
   {
       preparedStatement = connect.prepareStatement("select * from login_info where usernameLog=?");
@@ -120,44 +165,46 @@ public class MySqlAccess
       }
   }
   
-  public void readAllFromDB(String Db) throws Exception 
+  public String readAllFromDB(String Db) throws Exception 
   {
     try 
     {
       // Result set get the result of the SQL query
       resultSet = statement.executeQuery("select * from " + Db);
-      if(Db.equalsIgnoreCase("user"))
+      if(Db.equalsIgnoreCase("login_info"))
       {
-        writeResultSet(resultSet, 1);
+          return writeResultSet(resultSet, 1);
       }
-      else if(Db.equals("games"))
+      else if(Db.equalsIgnoreCase("matchmaker_info"))
       {
-          writeResultSet(resultSet, 2);
+          return writeResultSet(resultSet, 2);
       }
-      else if(Db.equals("moves"))
+      else 
       {
-          writeResultSet(resultSet, 3);
+          return "";
       }
       
     } 
     catch (Exception e) 
     {
-      throw e;
+       return e.getMessage();
     }
   }
   
-  public void deleteUser(int input) throws Exception
+  public void deleteUser(String user) throws Exception
   {
-      preparedStatement = connect.prepareStatement("delete from login_info where userIDLog=?;");
-      preparedStatement.setInt(1, input);
+      preparedStatement = connect.prepareStatement("delete from login_info where usernameLog=?;");
+      preparedStatement.setString(1, user);
       preparedStatement.executeUpdate();
+      System.out.println("User has been deleted!");
   }
   
-  public String getPassword(int userID) throws Exception
+  public String getPassword(String userName) throws Exception
   {
-      String res = searchDBByID(userID, "login_info");
-      String [] interim = res.split(" | ");
-      return interim[1].trim();
+      String res = searchDBByName(userName, "login_info");
+      String [] interim = res.split(",");
+      //System.out.println(res);
+      return interim[2].trim();
   }
 
   private String writeResultSet(ResultSet resultSet, int db) throws SQLException 
@@ -172,9 +219,9 @@ public class MySqlAccess
             String id = resultSet.getString("userIDLog");
             String username = resultSet.getString("usernameLog");
             String pass = resultSet.getString("password");
-            String clearance = resultSet.getString("access_level");
-            System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
-            hold = id + " | " + username + " | " + pass + " | " + clearance;
+            String clearance = resultSet.getString("isDev");
+            //System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
+            hold += id + "," + username + "," + pass + "," + clearance + "\n";
             }
             break;
         
@@ -185,8 +232,8 @@ public class MySqlAccess
             String Uname = resultSet.getString("usernameMatch");
             String rating = resultSet.getString("rating");
             String online = resultSet.getString("is_online");
-            System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
-            hold = id + " | " + Uname + " | " + rating + " | " + online;
+            //System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
+            hold += id + "," + Uname + "," + rating + "," + online + "\n";
             } 
             break; 
         }
