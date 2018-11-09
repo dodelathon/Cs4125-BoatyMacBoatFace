@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 /**
  *
  * @author donal
@@ -23,9 +24,34 @@ public class Client_socket
     private Socket socket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
+    private final String ip = "192.168.43.1";
+    Scanner cmd;
+    String input;
+    String [] interim;
     
     public Client_socket()
     {
+        this.cmd = new Scanner(System.in);
+        boolean stop = false;
+        listenSocket();
+        while(stop == false)
+        {
+            try
+            {
+                input = cmd.nextLine().toLowerCase();
+                interim = input.split(",");
+                switch(interim[0])
+                {
+                    case "quit": stop = false; break;
+                    default : out.println(input); System.out.println(in.readLine()); interim = null; break;
+                    
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error taking input!");
+            }
+        }
         
     }
     
@@ -34,13 +60,13 @@ public class Client_socket
         //Create socket connection
         try 
         {
-            socket = new Socket("Donals-PC", 4444);
+            socket = new Socket(ip, 4444);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } 
         catch (UnknownHostException e) 
         {
-            System.out.println("Unknown host: 192.168.0.97.eng");
+            System.out.println("Unknown host: " + ip);
             System.exit(1);
         } 
         catch  (IOException e) 

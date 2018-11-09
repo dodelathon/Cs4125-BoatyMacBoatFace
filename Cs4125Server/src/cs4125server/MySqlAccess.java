@@ -12,18 +12,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MySqlAccess 
+public final class MySqlAccess 
 {
+  final static MySqlAccess access = getInstance();
   private Connection connect = null;
   private Statement statement = null;
   private PreparedStatement preparedStatement = null;
   private ResultSet resultSet = null;
 
-  public MySqlAccess()throws Exception
+  private MySqlAccess()throws Exception
   {
       connectDB("localhost","Donal","Zippingdonal07", "userdetails");
   }
-  public MySqlAccess(String user, String Pass, String db, String domain)throws Exception
+  private MySqlAccess(String user, String Pass, String db, String domain)throws Exception
   {
       connectDB(domain,user,Pass,db);
   }
@@ -67,7 +68,7 @@ public class MySqlAccess
       }
   }
   
-  private void insertRowIntoMatchmakingInfo(String uName, int rating) throws Exception
+  private void insertRowIntoMatchmakingInfo(String uName, double rating) throws Exception
   {
       
     preparedStatement = connect.prepareStatement("insert into matchmaker_info values (LAST_INSERT_ID(), ?, ?, default)");
@@ -89,7 +90,7 @@ public class MySqlAccess
         res = writeResultSet(resultSet, 1);
         return res;
       }
-      else if(db.equalsIgnoreCase("matchmaking_info"))
+      else if(db.equalsIgnoreCase("matchmaker_info"))
       {
         preparedStatement = connect.prepareStatement("SELECT * from ? where userIDMatch=?");
         preparedStatement.setString(1, db);
@@ -134,7 +135,7 @@ public class MySqlAccess
         res = writeResultSet(resultSet, 1);
         return res;
       }
-      else if(db.equalsIgnoreCase("matchmaking_info"))
+      else if(db.equalsIgnoreCase("matchmaker_info"))
       {
         preparedStatement = connect.prepareStatement("SELECT * from " + db + " where usernameMatch=?");
        // preparedStatement.setString(1, db);
@@ -163,6 +164,42 @@ public class MySqlAccess
       {
           return false;
       }
+  }
+  
+  public static MySqlAccess getInstance()
+  {
+      if(access == null)
+      {
+        try
+        {
+            return new MySqlAccess();
+        }
+        catch(Exception e)
+        {
+            return null;        
+        }
+      }
+      else
+      {
+          return access;
+      }
+  }
+  
+  
+  public void updateElo(int playerID, double newElo) throws SQLException
+  {
+      preparedStatement  = connect.prepareStatement("update matchmaker_info set rating = ? where userIDMatch = ?");
+      preparedStatement.setString(1, newElo + "");
+      preparedStatement.setString(2, playerID + "");
+      preparedStatement.executeUpdate();
+  }
+  
+  public void updateOnlineStatus(int playerID, int status) throws SQLException
+  {
+      preparedStatement  = connect.prepareStatement("update matchmaker_info set is_online = ? where userIDMatch = ?");
+      preparedStatement.setString(1, status + "");
+      preparedStatement.setString(2, playerID + "");
+      preparedStatement.executeUpdate();
   }
   
   public String readAllFromDB(String Db) throws Exception 
@@ -239,13 +276,7 @@ public class MySqlAccess
         }
     return hold;
   }
-
-
-  // You need to close the resultSet
-
-    /**
-     *
-     */
+  
   public void close() 
   {
     try {

@@ -13,15 +13,7 @@ public class Login_Backround
 {
     public boolean isLoginValid()
     {
-        if()
-        {
-            return  true;
-    
-        }
-        else
-        {
-            return false;
-        }
+      return false;
     }
     
 }
