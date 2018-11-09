@@ -257,8 +257,8 @@ public final class MySqlAccess
                 String username = resultSet.getString("usernameLog");
                 String pass = resultSet.getString("password");
                 String clearance = resultSet.getString("isDev");
-                //System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
-                hold += id + "," + username + "," + pass + "," + clearance + "\n";
+                System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
+                hold += id + "," + username + "," + pass + "," + clearance + ",";
             }
             break;
         

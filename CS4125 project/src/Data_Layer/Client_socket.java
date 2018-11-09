@@ -34,6 +34,7 @@ public class Client_socket
         this.cmd = new Scanner(System.in);
         boolean stop = false;
         listenSocket();
+        String hold = "";
         while(stop == false)
         {
             System.out.println("Please enter a command\n1)quit\n2)adduser");
@@ -46,8 +47,30 @@ public class Client_socket
                     interim = input.split(",");
                     switch(interim[0])
                     {
-                        case "quit": stop = true; break;
-                        default : out.println(input); System.out.println(in.readLine()); interim = null; break;
+                        case "quit": 
+                            stop = true; 
+                            out.println("quit"); 
+                        break;
+                        
+                        default : 
+                            out.println(input);
+                            input = in.readLine();
+                            interim = input.split(",");
+                            input = "";
+                            if(interim.length > 1)
+                            {
+                                for(int i = 0; i < interim.length - 4; i = i + 4)
+                                {
+                                    input += interim[i] + " | " + interim[i + 1] + " | " + interim[i + 2] + " | " + interim[i + 3] + "\n";
+                                }
+                            }
+                            else
+                            {
+                                input = interim[0];
+                            }
+                            System.out.println(input);
+                            interim = null; 
+                        break;
                     
                     }
                 }

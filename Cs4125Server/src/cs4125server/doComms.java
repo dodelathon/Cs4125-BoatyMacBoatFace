@@ -48,13 +48,19 @@ class doComms implements Runnable
         }
         else
         {
+            
             while((line = in.readLine()) != null)
             {
-               
                 line = line.toLowerCase();
                 interim = line.split(",");
                 switch(interim[0])
                 {
+                    case "quit":
+                        conn = null;
+                        in = null;
+                        out = null;
+                        server.close();
+                    break;
                     case "adduser": 
                         addUser(interim);
                     break;
@@ -65,7 +71,7 @@ class doComms implements Runnable
                         }
                         else
                         {
-                            out.println("Invalid amount of arguments passed");
+                            output = "Invalid amount of arguments";
                         }
                     break;
                     case "getuser":
@@ -89,15 +95,13 @@ class doComms implements Runnable
                         setElo(Integer.parseInt(interim[1]), Integer.parseInt(interim[2]));
                     break;
                 }
+                out.println(output);
             }
-            out.println(output);
         }
-        server.close();
       } 
       catch (IOException ioe) 
       {
         System.out.println("IOException on socket listen: " + ioe);
-        ioe.printStackTrace();
       }
     }
     
@@ -106,11 +110,11 @@ class doComms implements Runnable
         try
         {
             conn.insertRowIntoLoginInfo(interim[1], interim[2], Integer.parseInt(interim[3]));
-            output = "Insertion successful!";
+            output = "Successful!";
         }
         catch(Exception e)
         {
-            output = e.toString();
+            output = "Failed";
         }
     }
     
@@ -118,11 +122,11 @@ class doComms implements Runnable
     {
         try
         {
-            output = conn.readAllFromDB(db);
+            output = conn.readAllFromDB(db) + ".";
         }
         catch(Exception e)
         {
-            output  = "Read Failed!";
+            output  = "Failed!";
         }
         
     }
@@ -135,7 +139,7 @@ class doComms implements Runnable
         }
         catch(Exception e)
         {
-            output  = e.toString();
+            output  = "Failed";
         }
     }
     
@@ -147,7 +151,7 @@ class doComms implements Runnable
         }
         catch(Exception e)
         {
-            output  = e.toString();
+            output  = "Failed";
         }
     }
     
@@ -160,7 +164,7 @@ class doComms implements Runnable
         }
         catch(Exception e)
         {
-           output = e.toString();
+           output = "Failed";
         }
     }
     
@@ -173,7 +177,7 @@ class doComms implements Runnable
         }
         catch(Exception e)
         {
-            output = e.toString();
+            output = "Failed";
         }
     }
     
