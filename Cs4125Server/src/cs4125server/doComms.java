@@ -61,38 +61,67 @@ class doComms implements Runnable
                         out = null;
                         server.close();
                     break;
-                    case "adduser": 
-                        addUser(interim);
+                    case "adduser":
+                        if(interim.length == 4)
+                        {
+                            addUser(interim);
+                            output = "Successful!";
+                        }
+                        else
+                        {
+                            output = "Incorrect amount arguments!";
+                        }
                     break;
                     case "getall":
                         if(interim.length == 2)
                         {
-                            getAll(interim[1]);
+                            getAll(interim[1].trim());
                         }
                         else
                         {
-                            output = "Invalid amount of arguments";
+                            output = "Incorrect amount arguments!";
                         }
                     break;
                     case "getuser":
-                        if(interim[1].matches(p1))
+                        if(interim.length == 3)
                         {
-                            getUser(interim[1], interim[2]);
-                        }
-                        else if(interim[1].matches(p2))
-                        {   
-                            getUser(Integer.parseInt(interim[1]), interim[2]);
+                            if(interim[1].matches(p1))
+                            {
+                                getUser(interim[1].trim(), interim[2].trim());
+                            }
+                            else if(interim[1].matches(p2) )
+                            {   
+                                getUser(Integer.parseInt(interim[1].trim()), interim[2].trim());
+                            }
+                            else
+                            {
+                                output = "Invalid input";
+                            }
                         }
                         else
                         {
-                            output = "Invalid input";
+                            output = "Incorrect amount arguments!";
                         }
                     break;
                     case "setonlinestatus":
-                        setOnlineStatus(Integer.parseInt(interim[1]), Integer.parseInt(interim[2]));
+                        if(interim.length == 3)
+                        {
+                            setOnlineStatus(Integer.parseInt(interim[1].trim()), Integer.parseInt(interim[2].trim()));
+                        }
+                        else
+                        {
+                            output = "Incorrect amount arguments!"; 
+                        }
                     break;
                     case "setelo":
-                        setElo(Integer.parseInt(interim[1]), Integer.parseInt(interim[2]));
+                        if(interim.length == 3)
+                        {
+                            setElo(Integer.parseInt(interim[1].trim()), Double.parseDouble(interim[2].trim()));
+                        }
+                        else
+                        {
+                            output = "Incorrect amount arguments!";
+                        }
                     break;
                 }
                 out.println(output);
@@ -109,7 +138,7 @@ class doComms implements Runnable
     {
         try
         {
-            conn.insertRowIntoLoginInfo(interim[1], interim[2], Integer.parseInt(interim[3]));
+            conn.insertRowIntoLoginInfo(interim[1].trim(), interim[2].trim(), Integer.parseInt(interim[3].trim()));
             output = "Successful!";
         }
         catch(Exception e)

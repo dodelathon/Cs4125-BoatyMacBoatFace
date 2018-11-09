@@ -47,8 +47,7 @@ public class Cs4125Server
     } 
     catch (IOException ioe) 
     {
-      System.out.println("IOException on socket listen: " + ioe);
-      ioe.printStackTrace();
+      System.out.println("Client has diconnected");
     }
   }
 

@@ -37,7 +37,7 @@ public class Client_socket
         String hold = "";
         while(stop == false)
         {
-            System.out.println("Please enter a command\n1)quit\n2)adduser");
+            System.out.println("Please enter a command\n1)quit\n2)adduser [name] [password] [dev access]\n3)getall [databasename]\n4)setonlinestatus [id] [newonline status]\n5)setelo [id] [newelo]");
             try
             {
                 input = cmd.nextLine();
