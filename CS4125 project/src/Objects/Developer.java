@@ -1,13 +1,16 @@
-Package Objects
+package Objects;
 
-class Developer implements User
+public class Developer implements User
 {
 	private int ID;
 	private int rating;
 	private String encryptedPassword;
-	private String username();
+	private String username;
 	
 	public Developer()
+        {
+            
+        }
 	
 	public Developer(String un, String eP)
 	{
@@ -15,23 +18,25 @@ class Developer implements User
 		this.username = un;
 	}
 	
+        @Override
 	public String getUsername()
 	{
 		return username;
 	}
-	@override
+        
+        @Override
 	public int getRating()
 	{
 		return this.rating;
 	}
 	
-	@override
+	@Override
 	public int getID()
 	{
 		return this.ID;
 	}
 	
-	@override
+	@Override
 	public String getEncryptedPassword()
 	{
 		return this.encryptedPassword;
@@ -47,12 +52,12 @@ class Developer implements User
 		this.rating = r;
 	}
 	
-	public String seePlayerRating()
+	public String seePlayerRating(Player p)
 	{
 		//database shit using player from database stored as Player p = new Player(int rating, String un)
 		
-		int r = p.getRating;
+		int r = p.getRating();
 		
-		return r + p.getUsername() + "'s rating is " + r;
+		return  p.getUsername() + "'s rating is " + r;
 	}
 }

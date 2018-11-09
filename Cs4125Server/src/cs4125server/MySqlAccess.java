@@ -253,24 +253,24 @@ public final class MySqlAccess
         case 1:
             while (resultSet.next()) 
             {
-            String id = resultSet.getString("userIDLog");
-            String username = resultSet.getString("usernameLog");
-            String pass = resultSet.getString("password");
-            String clearance = resultSet.getString("isDev");
-            //System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
-            hold += id + "," + username + "," + pass + "," + clearance + "\n";
+                String id = resultSet.getString("userIDLog");
+                String username = resultSet.getString("usernameLog");
+                String pass = resultSet.getString("password");
+                String clearance = resultSet.getString("isDev");
+                //System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
+                hold += id + "," + username + "," + pass + "," + clearance + "\n";
             }
             break;
         
         case 2: 
             while (resultSet.next()) 
             {
-            String id = resultSet.getString("userIDMatch");
-            String Uname = resultSet.getString("usernameMatch");
-            String rating = resultSet.getString("rating");
-            String online = resultSet.getString("is_online");
-            //System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
-            hold += id + "," + Uname + "," + rating + "," + online + "\n";
+                String id = resultSet.getString("userIDMatch");
+                String Uname = resultSet.getString("usernameMatch");
+                String rating = resultSet.getString("rating");
+                String online = resultSet.getString("is_online");
+                //System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
+                hold += id + "," + Uname + "," + rating + "," + online + "\n";
             } 
             break; 
         }

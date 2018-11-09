@@ -1,21 +1,13 @@
-package Objects
+package Objects;
 
-public interface User()
+public interface User
 {
-	public int getID()
-	{
-	}
+	public int getID();
 	
-	public int getRating()
-	{
-	}
+	public int getRating();
 	
-	public String getUsername()
-	{
-	}
+	public String getUsername();
 	
-	public String getEncryptedPassword()
-	{
-	}
+	public String getEncryptedPassword();
 	
 }

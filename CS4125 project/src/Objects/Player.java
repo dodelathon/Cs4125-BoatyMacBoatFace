@@ -1,34 +1,44 @@
-class Player implements User
+package Objects;
+
+public class Player implements User
 {
-	private int ID;
+	private final int ID;
 	private int rating;
-	private String encryptedPassword;
-	public Developer()
+        private final String username;
+	private final String encryptedPassword;
 	
-	public Player(int r, String eP)
+	public Player(int id, String uname, String eP, int r)
 	{
-		this.rating = r;
-		this.encryptedPassword = eP;
+            this.ID = id;
+            this.username = uname;   
+            this.rating = r;
+            this.encryptedPassword = eP;
 	}
 	
-	@override
+	@Override
 	public int getRating()
 	{
 		return this.rating;
 	}
 	
-	@override
+	@Override
 	public int getID()
 	{
 		return this.ID;
 	}
 	
-	@override
+	@Override
 	public String getEncryptedPassword()
 	{
 		return this.encryptedPassword;
 	}
 	
+        @Override
+        public String getUsername()
+        {
+            return username;
+        }
+        
 	public void setRating(int r)
 	{
 		this.rating = r;

@@ -24,7 +24,7 @@ public class Client_socket
     private Socket socket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private final String ip = "192.168.43.1";
+    private final String ip = "192.168.0.179";
     Scanner cmd;
     String input;
     String [] interim;
@@ -36,20 +36,31 @@ public class Client_socket
         listenSocket();
         while(stop == false)
         {
+            System.out.println("Please enter a command\n1)quit\n2)adduser");
             try
             {
-                input = cmd.nextLine().toLowerCase();
-                interim = input.split(",");
-                switch(interim[0])
+                input = cmd.nextLine();
+                if(input != null)
                 {
-                    case "quit": stop = false; break;
-                    default : out.println(input); System.out.println(in.readLine()); interim = null; break;
+                    input = input.toLowerCase();
+                    interim = input.split(",");
+                    switch(interim[0])
+                    {
+                        case "quit": stop = true; break;
+                        default : out.println(input); System.out.println(in.readLine()); interim = null; break;
                     
+                    }
+                }
+                else
+                {
+                    System.out.println("Please provide input");
                 }
             }
-            catch(Exception e)
+            catch(IOException e)
             {
                 System.out.println("Error taking input!");
+                System.out.println(e.getMessage());
+                
             }
         }
         

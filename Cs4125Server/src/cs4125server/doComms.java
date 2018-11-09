@@ -44,50 +44,54 @@ class doComms implements Runnable
         conn = connect();
         if(conn == null)
         {
-            
+            out.println("Database unavailable, Please try again later!");
         }
         else
         {
-            while(((line = in.readLine()) != null))
+            while((line = in.readLine()) != null)
             {
+               
                 line = line.toLowerCase();
                 interim = line.split(",");
                 switch(interim[0])
                 {
-                case "adduser": 
-                    addUser(interim);
+                    case "adduser": 
+                        addUser(interim);
                     break;
-                case "getall":
-                    getAll(interim[1]);
+                    case "getall":
+                        if(interim.length == 2)
+                        {
+                            getAll(interim[1]);
+                        }
+                        else
+                        {
+                            out.println("Invalid amount of arguments passed");
+                        }
                     break;
-                case "getuser":
-                    if(interim[1].matches(p1))
-                    {
-                        getUser(interim[1], interim[2]);
-                    }
-                    else if(interim[1].matches(p2))
-                    {
-                        getUser(Integer.parseInt(interim[1]), interim[2]);
-                    }
-                    else
-                    {
-                        output = "Invalid input";
-                    }
+                    case "getuser":
+                        if(interim[1].matches(p1))
+                        {
+                            getUser(interim[1], interim[2]);
+                        }
+                        else if(interim[1].matches(p2))
+                        {   
+                            getUser(Integer.parseInt(interim[1]), interim[2]);
+                        }
+                        else
+                        {
+                            output = "Invalid input";
+                        }
                     break;
-                case "setonlinestatus":
-                    setOnlineStatus(Integer.parseInt(interim[1]), Integer.parseInt(interim[2]));
+                    case "setonlinestatus":
+                        setOnlineStatus(Integer.parseInt(interim[1]), Integer.parseInt(interim[2]));
                     break;
-                case "setelo":
-                    setElo(Integer.parseInt(interim[1]), Integer.parseInt(interim[2]));
+                    case "setelo":
+                        setElo(Integer.parseInt(interim[1]), Integer.parseInt(interim[2]));
                     break;
                 }
             }
+            out.println(output);
         }
-
-        // Now write to the client
-
-        out.println(output);
-
         server.close();
       } 
       catch (IOException ioe) 
@@ -118,7 +122,7 @@ class doComms implements Runnable
         }
         catch(Exception e)
         {
-            output  = e.toString();
+            output  = "Read Failed!";
         }
         
     }

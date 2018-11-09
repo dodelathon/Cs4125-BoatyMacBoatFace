@@ -36,12 +36,13 @@ public class Cs4125Server
       ServerSocket listener = new ServerSocket(port);
       Socket server;
 
-      while(i++ <= maxConnections)
+      while((i++ < maxConnections) || (maxConnections == 0))
       {
         server = listener.accept();
         doComms conn_c= new doComms(server);
         Thread t = new Thread(conn_c);
         t.start();
+        System.out.println(i);
       }
     } 
     catch (IOException ioe) 
