@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data_Layer;
+package cs4125server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,18 +12,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MySqlAccess 
+public final class MySqlAccess 
 {
+  final static MySqlAccess access = getInstance();
   private Connection connect = null;
   private Statement statement = null;
   private PreparedStatement preparedStatement = null;
   private ResultSet resultSet = null;
 
-  public MySqlAccess()throws Exception
+  private MySqlAccess()throws Exception
   {
       connectDB("localhost","Donal","Zippingdonal07", "userdetails");
   }
-  public MySqlAccess(String user, String Pass, String db, String domain)throws Exception
+  private MySqlAccess(String user, String Pass, String db, String domain)throws Exception
   {
       connectDB(domain,user,Pass,db);
   }
@@ -67,7 +68,7 @@ public class MySqlAccess
       }
   }
   
-  private void insertRowIntoMatchmakingInfo(String uName, int rating) throws Exception
+  private void insertRowIntoMatchmakingInfo(String uName, double rating) throws Exception
   {
       
     preparedStatement = connect.prepareStatement("insert into matchmaker_info values (LAST_INSERT_ID(), ?, ?, default)");
@@ -89,11 +90,56 @@ public class MySqlAccess
         res = writeResultSet(resultSet, 1);
         return res;
       }
-      else if(db.equalsIgnoreCase("matchmaking_info"))
+      else if(db.equalsIgnoreCase("matchmaker_info"))
       {
         preparedStatement = connect.prepareStatement("SELECT * from ? where userIDMatch=?");
         preparedStatement.setString(1, db);
         preparedStatement.setString(2, id + "");
+        resultSet = preparedStatement.executeQuery();
+        res = writeResultSet(resultSet, 2);
+        return res;
+      }
+      else
+      {
+          return res;
+      }
+  }
+  
+  public boolean isPlayerDev(String name) throws Exception
+  {
+     String result = searchDBByName(name, "login_info");
+     String interim[] = result.split(",");
+     if(Integer.parseInt(interim[3].trim()) == 0)
+     {
+         return false;
+     }
+     else if(Integer.parseInt(interim[3].trim()) == 1)
+     {
+        return true; 
+     }
+     else
+     {
+        return false;
+     }
+  }
+  
+  public String searchDBByName(String name, String db) throws Exception
+  {
+      String res = "";
+      if(db.equalsIgnoreCase("login_info"))
+      {
+        preparedStatement = connect.prepareStatement("SELECT * from " + db + " where usernameLog=?");
+        //preparedStatement.setString(1, db);
+        preparedStatement.setString(1, name);
+        resultSet = preparedStatement.executeQuery();
+        res = writeResultSet(resultSet, 1);
+        return res;
+      }
+      else if(db.equalsIgnoreCase("matchmaker_info"))
+      {
+        preparedStatement = connect.prepareStatement("SELECT * from " + db + " where usernameMatch=?");
+       // preparedStatement.setString(1, db);
+        preparedStatement.setString(1, name);
         resultSet = preparedStatement.executeQuery();
         res = writeResultSet(resultSet, 2);
         return res;
@@ -120,44 +166,82 @@ public class MySqlAccess
       }
   }
   
-  public void readAllFromDB(String Db) throws Exception 
+  public static MySqlAccess getInstance()
+  {
+      if(access == null)
+      {
+        try
+        {
+            return new MySqlAccess();
+        }
+        catch(Exception e)
+        {
+            return null;        
+        }
+      }
+      else
+      {
+          return access;
+      }
+  }
+  
+  
+  public void updateElo(int playerID, double newElo) throws SQLException
+  {
+      preparedStatement  = connect.prepareStatement("update matchmaker_info set rating = ? where userIDMatch = ?");
+      preparedStatement.setString(1, newElo + "");
+      preparedStatement.setString(2, playerID + "");
+      preparedStatement.executeUpdate();
+  }
+  
+  public void updateOnlineStatus(int playerID, int status) throws SQLException
+  {
+      preparedStatement  = connect.prepareStatement("update matchmaker_info set is_online = ? where userIDMatch = ?");
+      preparedStatement.setString(1, status + "");
+      preparedStatement.setString(2, playerID + "");
+      preparedStatement.executeUpdate();
+  }
+  
+  public String readAllFromDB(String Db) throws Exception 
   {
     try 
     {
       // Result set get the result of the SQL query
       resultSet = statement.executeQuery("select * from " + Db);
-      if(Db.equalsIgnoreCase("user"))
+      if(Db.equalsIgnoreCase("login_info"))
       {
-        writeResultSet(resultSet, 1);
+          return writeResultSet(resultSet, 1);
       }
-      else if(Db.equals("games"))
+      else if(Db.equalsIgnoreCase("matchmaker_info"))
       {
-          writeResultSet(resultSet, 2);
+          return writeResultSet(resultSet, 2);
       }
-      else if(Db.equals("moves"))
+      else 
       {
-          writeResultSet(resultSet, 3);
+          return "";
       }
       
     } 
     catch (Exception e) 
     {
-      throw e;
+       return e.getMessage();
     }
   }
   
-  public void deleteUser(int input) throws Exception
+  public void deleteUser(String user) throws Exception
   {
-      preparedStatement = connect.prepareStatement("delete from login_info where userIDLog=?;");
-      preparedStatement.setInt(1, input);
+      preparedStatement = connect.prepareStatement("delete from login_info where usernameLog=?;");
+      preparedStatement.setString(1, user);
       preparedStatement.executeUpdate();
+      System.out.println("User has been deleted!");
   }
   
-  public String getPassword(int userID) throws Exception
+  public String getPassword(String userName) throws Exception
   {
-      String res = searchDBByID(userID, "login_info");
-      String [] interim = res.split(" | ");
-      return interim[1].trim();
+      String res = searchDBByName(userName, "login_info");
+      String [] interim = res.split(",");
+      //System.out.println(res);
+      return interim[2].trim();
   }
 
   private String writeResultSet(ResultSet resultSet, int db) throws SQLException 
@@ -169,36 +253,30 @@ public class MySqlAccess
         case 1:
             while (resultSet.next()) 
             {
-            String id = resultSet.getString("userIDLog");
-            String username = resultSet.getString("usernameLog");
-            String pass = resultSet.getString("password");
-            String clearance = resultSet.getString("access_level");
-            System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
-            hold = id + " | " + username + " | " + pass + " | " + clearance;
+                String id = resultSet.getString("userIDLog");
+                String username = resultSet.getString("usernameLog");
+                String pass = resultSet.getString("password");
+                String clearance = resultSet.getString("isDev");
+                System.out.println("ID: " + id + " | Username: " + username + " | Password: " + pass + " | Is Dev: " + clearance);
+                hold += id + "," + username + "," + pass + "," + clearance + ",";
             }
             break;
         
         case 2: 
             while (resultSet.next()) 
             {
-            String id = resultSet.getString("userIDMatch");
-            String Uname = resultSet.getString("usernameMatch");
-            String rating = resultSet.getString("rating");
-            String online = resultSet.getString("is_online");
-            System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
-            hold = id + " | " + Uname + " | " + rating + " | " + online;
+                String id = resultSet.getString("userIDMatch");
+                String Uname = resultSet.getString("usernameMatch");
+                String rating = resultSet.getString("rating");
+                String online = resultSet.getString("is_online");
+                //System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
+                hold += id + "," + Uname + "," + rating + "," + online + "\n";
             } 
             break; 
         }
     return hold;
   }
-
-
-  // You need to close the resultSet
-
-    /**
-     *
-     */
+  
   public void close() 
   {
     try {

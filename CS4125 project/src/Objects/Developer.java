@@ -1,40 +1,75 @@
-Package Objects
+package Objects;
 
-class Developer implements User
+<<<<<<< HEAD
+public class Developer extends appUsers
+=======
+public class Developer implements User
+>>>>>>> 85d5839b44f7f6e2951c2789e4a8587c3ea3d423
 {
+    public Developer()
+    {
+    
+    }
+    public Developer(String name, String uName, String password)
+    {
+        setName(name);
+        setUsername(uName);
+        setPassword(password);
+    }
+}
+/*{
 	private int ID;
 	private int rating;
 	private String encryptedPassword;
-	private String username();
+	private String username;
+<<<<<<< HEAD
+        
+	public Developer()
+        {
+=======
 	
 	public Developer()
+        {
+            
+>>>>>>> 85d5839b44f7f6e2951c2789e4a8587c3ea3d423
+        }
 	
 	public Developer(String un, String eP)
 	{
 		this.encryptedPassword = eP;
 		this.username = un;
 	}
+<<<<<<< HEAD
+	@Override
+=======
 	
+        @Override
+>>>>>>> 85d5839b44f7f6e2951c2789e4a8587c3ea3d423
 	public String getUsername()
 	{
 		return username;
 	}
-	@override
+<<<<<<< HEAD
+	@Override
+=======
+        
+        @Override
+>>>>>>> 85d5839b44f7f6e2951c2789e4a8587c3ea3d423
 	public int getRating()
 	{
 		return this.rating;
 	}
 	
-	@override
+	@Override
 	public int getID()
 	{
 		return this.ID;
 	}
 	
-	@override
+	@Override
 	public String getEncryptedPassword()
 	{
-		return this.encryptedPassword;
+            return this.encryptedPassword;
 	}
 	
 	public void setRating(Player p, int r)
@@ -47,12 +82,19 @@ class Developer implements User
 		this.rating = r;
 	}
 	
-	public String seePlayerRating()
+	public String seePlayerRating(Player p)
 	{
 		//database shit using player from database stored as Player p = new Player(int rating, String un)
 		
-		int r = p.getRating;
+<<<<<<< HEAD
+		//int r = p.getRating;
 		
-		return r + p.getUsername() + "'s rating is " + r;
+		//return r + p.getUsername() + "'s rating is " + r;
+            return "s";
+=======
+		int r = p.getRating();
+		
+		return  p.getUsername() + "'s rating is " + r;
+>>>>>>> 85d5839b44f7f6e2951c2789e4a8587c3ea3d423
 	}
-}
+}*/
