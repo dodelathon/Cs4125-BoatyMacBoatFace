@@ -38,7 +38,7 @@ public final class MySqlAccess
       statement = connect.createStatement();
   }
   
-  public void insertRowIntoLoginInfo(String uName, String password, int isDev) throws Exception
+  public boolean insertRowIntoLoginInfo(String uName, String password, int isDev) throws Exception
   {
       if(isUsernameUsed(uName) == false)
       {
@@ -49,7 +49,7 @@ public final class MySqlAccess
             preparedStatement.setString(2, password);
             preparedStatement.executeUpdate();
             insertRowIntoMatchmakingInfo(uName, 0);
-            System.out.println("User has been added to the login Database!");
+            return true;
         }
         else if(isDev == 1)
         {
@@ -59,12 +59,16 @@ public final class MySqlAccess
             preparedStatement.setString(3, isDev + "");
             preparedStatement.executeUpdate();
             insertRowIntoMatchmakingInfo(uName, 0);
-            System.out.println("User has been added to the login Database!");
+            return true;
+        }
+        else
+        {
+            return false;
         }
       }
       else
       {
-          System.out.println("Username is already take, Please enter another");
+          return false;
       }
   }
   

@@ -15,17 +15,19 @@ import java.security.*;
 public class Cs4125Server 
 {
 
-/**
- * Title:        Sample Server
- * Description:  This utility will accept input from a socket, posting back to the socket before closing the link.
- * It is intended as a template for coders to base servers on. Please report bugs to brad at kieser.net
- * Copyright:    Copyright (c) 2002
- * Company:      Kieser.net
- * @author B. Kieser
- * @version 1.0
- */
 
-  private static int port = 4444, maxConnections = 0;
+
+/**
+     * Title:        Sample Server
+     * Description:  This utility will accept input from a socket, posting back to the socket before closing the link.
+     * It is intended as a template for coders to base servers on. Please report bugs to brad at kieser.net
+     * Copyright:    Copyright (c) 2002
+     * Company:      Kieser.net
+     * @author B. Kieser
+     * @version 1.0
+     */
+    private static final int port = 4444;
+    private static final int maxConnections = 0;
   // Listen for incoming connections and handle them
   public static void main(String[] args) 
   {
@@ -45,7 +47,7 @@ public class Cs4125Server
         System.out.println(i);
       }
     } 
-    catch (IOException ioe) 
+    catch (Exception e) 
     {
       System.out.println("Client has diconnected");
     }

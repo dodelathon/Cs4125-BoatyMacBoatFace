@@ -138,8 +138,15 @@ class doComms implements Runnable
     {
         try
         {
-            conn.insertRowIntoLoginInfo(interim[1].trim(), interim[2].trim(), Integer.parseInt(interim[3].trim()));
-            output = "Successful!";
+            boolean success = conn.insertRowIntoLoginInfo(interim[1].trim(), interim[2].trim(), Integer.parseInt(interim[3].trim()));
+            if(success == true)
+            {
+                output = "Successful!";
+            }
+            else
+            {
+                output = "Unsuccessful";
+            }
         }
         catch(Exception e)
         {

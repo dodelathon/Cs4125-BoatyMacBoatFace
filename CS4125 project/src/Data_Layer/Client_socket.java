@@ -24,7 +24,7 @@ public class Client_socket
     private Socket socket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private final String ip = "192.168.0.179";
+    private final String ip = "10.52.244.190";
     Scanner cmd;
     String input;
     String [] interim;
@@ -37,7 +37,7 @@ public class Client_socket
         String hold = "";
         while(stop == false)
         {
-            System.out.println("Please enter a command\n1)quit\n2)adduser [name] [password] [dev access]\n3)getall [databasename]\n4)setonlinestatus [id] [newonline status]\n5)setelo [id] [newelo]");
+            System.out.println("Please enter a command\n1)quit\n2)adduser,[name],[password],[dev access]\n3)getall,[databasename]\n4)setonlinestatus,[id],[newonline status]\n5)setelo,[id],[newelo]");
             try
             {
                 input = cmd.nextLine();
