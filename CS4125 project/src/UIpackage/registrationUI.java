@@ -1,5 +1,7 @@
 package UIpackage;
 import Authentication.loginEncryption;
+import Data_Layer.Client_socket;
+import java.awt.event.ActionListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,7 +25,7 @@ import javax.xml.transform.Source;
  *
  * @author seani
  */
-public class registrationUI extends Application implements UI {
+public class registrationUI implements UI {
 
     @Override
     public String getUname() {
@@ -43,15 +45,14 @@ public class registrationUI extends Application implements UI {
     public void registrationUI() {
         
     }
-    public void register()
+    public void register(Stage loginStage, Client_socket cS)
     {
-        Stage s = new Stage();
-        start(s);
+        Stage registerStage = new Stage();
+        start(registerStage, loginStage, cS);
     }
-    @Override
-    public void start(Stage s)
+    public void start(Stage registerStage, Stage loginStage, Client_socket cS)
     {
-        s.setTitle("Regestration");
+        registerStage.setTitle("Regestration");
         BorderPane bPane = new BorderPane();
         bPane.setPadding(new Insets(10,50,50,50));
         HBox hb = new HBox();
@@ -67,14 +68,20 @@ public class registrationUI extends Application implements UI {
         Button RegistrationBtn = new Button("Register");
         
         RegistrationBtn.setOnAction(new EventHandler() {
+            Client_socket cSo = cS;
             @Override
             public void handle(Event event) {
-                System.out.println("Details added to db");
-                //add details to db
-                applicationUI app = new applicationUI();
-                s.hide();
-                app.applicationUI();
+                String username = userNameText.getText();
+                String password = loginEncryption.loginEncryption(passF.getText());
+                String addUser = "adduser," + username + "," + password + "," + 0;
+                System.out.println(addUser);
+                System.out.print(cSo.sendInfo(addUser));
+                
+                registerStage.hide();
+                loginStage.show();
+                //loginStage.show();
             }
+
         });
         
         gPane.add(userName, 0, 0);
@@ -85,9 +92,9 @@ public class registrationUI extends Application implements UI {
         bPane.setTop(hb);
         bPane.setCenter(gPane);
         Scene scene = new Scene(bPane);
-        s.setScene(scene);
-        s.setResizable(false);
-        s.show();
+        registerStage.setScene(scene);
+        registerStage.setResizable(false);
+        registerStage.show();
 
     }
     

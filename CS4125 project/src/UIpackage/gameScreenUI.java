@@ -12,16 +12,16 @@ import javafx.stage.Stage;
  *
  * @author seani
  */
-public class gameScreenUI extends Application{
+public class gameScreenUI {
 
     public void gameScreenUI() throws Exception {
         Stage gameS = new Stage();
         start(gameS);
     }
     
-    @Override
-    public void start(Stage gameStage) throws Exception {
-        System.out.println("here");
+    public void start(Stage gameStage)
+    {
+    
     }
     
 }

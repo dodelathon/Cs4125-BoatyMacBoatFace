@@ -24,69 +24,12 @@ public class Client_socket
     private Socket socket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private final String ip = "10.52.244.190";
-    Scanner cmd;
-    String input;
-    String [] interim;
+    private final String ip = "192.168.43.138";
+    private String [] interim;
     
     public Client_socket()
     {
-        this.cmd = new Scanner(System.in);
-        boolean stop = false;
-        listenSocket();
-        String hold = "";
-        while(stop == false)
-        {
-            System.out.println("Please enter a command\n1)quit\n2)adduser,[name],[password],[dev access]\n3)getall,[databasename]\n4)setonlinestatus,[id],[newonline status]\n5)setelo,[id],[newelo]");
-            try
-            {
-                input = cmd.nextLine();
-                if(input != null)
-                {
-                    input = input.toLowerCase();
-                    interim = input.split(",");
-                    switch(interim[0])
-                    {
-                        case "quit": 
-                            stop = true; 
-                            out.println("quit"); 
-                        break;
-                        
-                        default : 
-                            out.println(input);
-                            input = in.readLine();
-                            interim = input.split(",");
-                            input = "";
-                            if(interim.length > 1)
-                            {
-                                for(int i = 0; i < interim.length - 4; i = i + 4)
-                                {
-                                    input += interim[i] + " | " + interim[i + 1] + " | " + interim[i + 2] + " | " + interim[i + 3] + "\n";
-                                }
-                            }
-                            else
-                            {
-                                input = interim[0];
-                            }
-                            System.out.println(input);
-                            interim = null; 
-                        break;
-                    
-                    }
-                }
-                else
-                {
-                    System.out.println("Please provide input");
-                }
-            }
-            catch(IOException e)
-            {
-                System.out.println("Error taking input!");
-                System.out.println(e.getMessage());
-                
-            }
-        }
-        
+        listenSocket();       
     }
     
     public void listenSocket() 
@@ -110,10 +53,47 @@ public class Client_socket
         }
     }
 
-    public static void main(String[] args) 
+    public String sendInfo(String request)
     {
-        Client_socket frame = new Client_socket();
-	frame.listenSocket();
+        String hold = "";
+        System.out.println("here");
+            try
+            {
+                if(request != null)
+                {
+                    System.out.println("here2");
+                    request = request.toLowerCase();
+                    interim = request.split(",");
+                    out.println(request);
+                    request = in.readLine();
+                    System.out.println(request);
+                    interim = request.split(",");
+                    request = "";
+                    if(interim.length > 1)
+                    {
+                        for(int i = 0; i < interim.length - 4; i = i + 4)
+                        {
+                            request += interim[i] + " | " + interim[i + 1] + " | " + interim[i + 2] + " | " + interim[i + 3] + "\n";
+                        }
+                    }
+                    else
+                    {
+                        request = interim[0];
+                    }
+                    interim = null; 
+                }
+                else
+                {
+                    request = "Please provide request";
+                }
+            }
+            catch(IOException e)
+            {
+                request = "Error taking request!";
+                request += "\n" + e.getMessage();
+                
+            }
+            return request;
     }
 }
 

@@ -22,7 +22,7 @@ public final class MySqlAccess
 
   private MySqlAccess()throws Exception
   {
-      connectDB("localhost","Donal","Zippingdonal07", "userdetails");
+      connectDB("localhost","root","", "userdetails");
   }
   private MySqlAccess(String user, String Pass, String db, String domain)throws Exception
   {

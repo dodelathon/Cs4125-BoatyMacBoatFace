@@ -1,5 +1,6 @@
 package UIpackage;
 import Authentication.loginEncryption;
+import Data_Layer.Client_socket;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,6 +24,7 @@ public class loginUI extends Application implements UI {
     String sampleUsername = "sDonnelly";
     String samplePassword = "309e509b879dccb653c53f432a2098ea2a31386f8f33080e516ad53939e120316648e88b9c368fdc477d4eccd22599ed5e2ebf2b87f7beac1d63d38c95eacb0e";
     String checkUname, checkPword;
+    private final Client_socket cS = new Client_socket();
     public loginUI() 
     {
     }
@@ -32,9 +34,9 @@ public class loginUI extends Application implements UI {
     }
     
     @Override
-    public void start(Stage primaryStage)
+    public void start(Stage loginStage)
     {
-        primaryStage.setTitle("Login Screen");
+        loginStage.setTitle("Login Screen");
         
         BorderPane bPane = new BorderPane();
         bPane.setPadding(new Insets(10,50,50,50));
@@ -61,8 +63,6 @@ public class loginUI extends Application implements UI {
         gPane.add(loginBtn,2, 1);
         gPane.add(RegistrationBtn,3, 1);
 
-
-        
         Reflection r = new Reflection();
         r.setFraction(0.7f);
         gPane.setEffect(r);
@@ -78,7 +78,11 @@ public class loginUI extends Application implements UI {
                 checkUname = userNameText.getText();
                 checkPword = passF.getText();   
                 if (checkUname.equals(sampleUsername) && loginEncryption.loginEncryption(checkPword).equals(samplePassword))
-                    System.out.println("loged in!!");
+                {
+                    applicationUI app = new applicationUI();
+                    app.applicationUI(checkUname);
+                    System.out.println("logged in!!");
+                }
                 else
                     System.out.println("Login attempt failed!!");
 
@@ -88,9 +92,10 @@ public class loginUI extends Application implements UI {
             @Override
             public void handle(Event event) {
                 registrationUI register = new registrationUI();
-                primaryStage.hide();
-                register.register();
+                loginStage.hide();
+                register.register(loginStage, cS);
             }
+            
         });
         
         
@@ -103,10 +108,10 @@ public class loginUI extends Application implements UI {
         bPane.setCenter(gPane);
         Scene scene = new Scene(bPane);
         scene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.titleProperty().bind(scene.widthProperty().asString().concat(" : ").concat(scene.heightProperty().asString()));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        loginStage.setScene(scene);
+        loginStage.titleProperty().bind(scene.widthProperty().asString().concat(" : ").concat(scene.heightProperty().asString()));
+        loginStage.setResizable(false);
+        loginStage.show();
         
     }   
 

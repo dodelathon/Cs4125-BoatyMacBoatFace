@@ -7,16 +7,19 @@ import javafx.stage.Stage;
  *
  * @author seani
  */
-public class applicationUI  extends Application{
-    
-    public void applicationUI(){
-        Stage appS = new Stage();
-        start(appS);
+public class applicationUI  {
+
+
+    public void applicationUI(String username){
+        Stage appStage = new Stage();
+        start(appStage, username);
     }
 
-    @Override
-    public void start(Stage appS) {
-        appS.setTitle("Login Screen");
+    public void start(Stage appS, String username) {
+        appS.setTitle("Game Lobby");
+        
+        System.out.println(username);
+        
         
     }
     
