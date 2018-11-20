@@ -25,7 +25,7 @@ class doComms implements Runnable
     doComms(Socket server) 
     {
       this.server = server;
-      p1 = "[A-Za-z]";
+      p1 = "[A-Za-z]{1,30}";
       p2 = "[0-9]";
     }
 

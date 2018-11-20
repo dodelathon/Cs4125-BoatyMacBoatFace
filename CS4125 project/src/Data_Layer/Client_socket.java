@@ -25,7 +25,7 @@ public class Client_socket
     private PrintWriter out = null;
     private BufferedReader in = null;
     private final String ip = "192.168.43.138";
-    private String [] interim;
+  //  private String [] interim;
     
     public Client_socket()
     {
@@ -56,20 +56,18 @@ public class Client_socket
     public String sendInfo(String request)
     {
         String hold = "";
-        System.out.println("here");
             try
             {
                 if(request != null)
                 {
-                    System.out.println("here2");
                     request = request.toLowerCase();
-                    interim = request.split(",");
+                    //interim = request.split(",");
                     out.println(request);
                     request = in.readLine();
-                    System.out.println(request);
-                    interim = request.split(",");
-                    request = "";
-                    if(interim.length > 1)
+                   // System.out.println(request);
+                   // interim = request.split(",");
+                    //request = "";
+                   /* if(interim.length > 1)
                     {
                         for(int i = 0; i < interim.length - 4; i = i + 4)
                         {
@@ -80,7 +78,7 @@ public class Client_socket
                     {
                         request = interim[0];
                     }
-                    interim = null; 
+                    interim = null;*/ 
                 }
                 else
                 {

@@ -75,13 +75,20 @@ public class loginUI extends Application implements UI {
             @Override
             public void handle(Event event)
             {
+                String[] dataElements;
                 checkUname = userNameText.getText();
-                checkPword = passF.getText();   
-                if (checkUname.equals(sampleUsername) && loginEncryption.loginEncryption(checkPword).equals(samplePassword))
+                checkPword = passF.getText();
+                String passed = "getuser" + "," + checkUname + "," + "login_info";
+                String userData = cS.sendInfo(passed);
+                if (!userData.equalsIgnoreCase("Invalid input"))
                 {
-                    applicationUI app = new applicationUI();
-                    app.applicationUI(checkUname);
-                    System.out.println("logged in!!");
+                    dataElements = userData.split(",");
+                    if (loginEncryption.loginEncryption(checkPword).equals(dataElements[2]))
+                    {
+                        applicationUI app = new applicationUI();
+                        app.applicationUI(checkUname);
+                        System.out.println("logged in!!");
+                    }
                 }
                 else
                     System.out.println("Login attempt failed!!");
