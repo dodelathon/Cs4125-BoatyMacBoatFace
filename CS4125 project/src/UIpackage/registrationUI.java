@@ -76,10 +76,8 @@ public class registrationUI implements UI {
                 String addUser = "adduser," + username + "," + password + "," + 0;
                 System.out.println(addUser);
                 System.out.print(cSo.sendInfo(addUser));
-                
                 registerStage.hide();
                 loginStage.show();
-                //loginStage.show();
             }
 
         });

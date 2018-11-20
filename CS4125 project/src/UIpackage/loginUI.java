@@ -14,11 +14,9 @@ import javafx.scene.effect.Reflection;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.event.Event;
-import javax.xml.transform.Source;
 
 public class loginUI extends Application implements UI {
     String sampleUsername = "sDonnelly";
@@ -86,7 +84,7 @@ public class loginUI extends Application implements UI {
                     if (loginEncryption.loginEncryption(checkPword).equals(dataElements[2]))
                     {
                         applicationUI app = new applicationUI();
-                        app.applicationUI(checkUname);
+                        app.applicationUI(loginStage, dataElements);
                         System.out.println("logged in!!");
                     }
                 }
