@@ -22,13 +22,14 @@ public class Match
         pNames = new ArrayList<>();
     }
     
-    public void AddPlayer(int id, String uname)
+    public int AddPlayer(int id, String uname)
     {
         if(pIDs.size() < 5)
         {
             pIDs.add(id);
             pNames.add(uname);
         }
+        return pIDs.size();
     }
     
     
