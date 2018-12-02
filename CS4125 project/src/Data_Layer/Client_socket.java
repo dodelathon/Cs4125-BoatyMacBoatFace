@@ -5,16 +5,13 @@
  */
 package Data_Layer;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
+import java.net.InetAddress;
 /**
  *
  * @author donal
@@ -24,8 +21,7 @@ public class Client_socket
     private Socket socket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private final String ip = "10.52.32.161";
-  //  private String [] interim;
+    private InetAddress ip;
     
     public Client_socket()
     {
@@ -37,7 +33,9 @@ public class Client_socket
         //Create socket connection
         try 
         {
-            socket = new Socket(ip, 4444);
+            ip = InetAddress.getLocalHost();
+            String hostname = ip.getHostName();
+            socket = new Socket(hostname, 4444);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } 
@@ -61,24 +59,8 @@ public class Client_socket
                 if(request != null)
                 {
                     request = request.toLowerCase();
-                    //interim = request.split(",");
                     out.println(request);
                     request = in.readLine();
-                   // System.out.println(request);
-                   // interim = request.split(",");
-                    //request = "";
-                   /* if(interim.length > 1)
-                    {
-                        for(int i = 0; i < interim.length - 4; i = i + 4)
-                        {
-                            request += interim[i] + " | " + interim[i + 1] + " | " + interim[i + 2] + " | " + interim[i + 3] + "\n";
-                        }
-                    }
-                    else
-                    {
-                        request = interim[0];
-                    }
-                    interim = null;*/ 
                 }
                 else
                 {

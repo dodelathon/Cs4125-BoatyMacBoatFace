@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import BusinessLayer.Matching_process.Matchmaker;
 
 /**
  *
@@ -23,6 +24,8 @@ public class doComms extends Thread
     private String line, output;
     private final String  p1, p2;
     private MySqlAccess conn;
+    private Matchmaker match;
+    
 
     public doComms(Socket server) 
     {
@@ -43,6 +46,7 @@ public class doComms extends Thread
         BufferedReader in = new BufferedReader (new InputStreamReader(server.getInputStream()));
         PrintStream out = new PrintStream(server.getOutputStream());
         String interim[];
+        match = Matchmaker.getInstance();
         conn = connect();
         if(conn == null)
         {
@@ -129,6 +133,16 @@ public class doComms extends Thread
                         if(interim.length == 3)
                         {
                             setQueued(Integer.parseInt(interim[1].trim()), Integer.parseInt(interim[2].trim()));
+                        }
+                        else
+                        {
+                            output = "Incorrect amount arguments!";
+                        }
+                    break;
+                    case "match":
+                        if(interim.length == 2)
+                        {
+                            
                         }
                         else
                         {
@@ -243,6 +257,11 @@ public class doComms extends Thread
             output = "Failed";
         }
                 
+    }
+    
+    private void match()
+    {
+        
     }
     
     private MySqlAccess connect()
