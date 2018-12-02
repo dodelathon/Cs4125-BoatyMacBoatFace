@@ -39,14 +39,7 @@ CREATE TABLE `login_info` (
 -- Dumping data for table `login_info`
 --
 
-INSERT INTO `login_info` (`userIDLog`, `usernameLog`, `password`, `isDev`) VALUES
-(3, 'hi', 'hi', 0),
-(4, 'beep', 'shabalabadingdong', 0),
-(5, 'bep', 'shabalabadingdong', 0),
-(6, 'bepe', 'shabalabadingdong', 1),
-(7, 'hello', 'meep', 0),
-(8, 'huh', 'ugh', 1),
-(9, 'added', 'fromadifferentcomputer', 0);
+
 
 -- --------------------------------------------------------
 
@@ -143,9 +136,20 @@ ALTER TABLE `matches`
 -- Constraints for table `matchmaker_info`
 --
 ALTER TABLE `matchmaker_info`
-  ADD CONSTRAINT `id` FOREIGN KEY (`userIDMatch`) REFERENCES `login_info` (`userIDLog`) ON DELETE CASCADE;
+  ADD CONSTRAINT `id` FOREIGN KEY (`userIDMatch`) REFERENCES `login_info` (`userIDLog`) ON DELETE CASCADE on update restrict;
 COMMIT;
+
+INSERT INTO `login_info` (`userIDLog`, `usernameLog`, `password`, `isDev`) VALUES
+(3, 'hi', 'hi', 0),
+(4, 'beep', 'shabalabadingdong', 0),
+(5, 'bep', 'shabalabadingdong', 0),
+(6, 'bepe', 'shabalabadingdong', 1),
+(7, 'hello', 'meep', 0),
+(8, 'huh', 'ugh', 1),
+(9, 'added', 'fromadifferentcomputer', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+

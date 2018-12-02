@@ -24,7 +24,7 @@ public class Client_socket
     private Socket socket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private final String ip = "10.52.32.141";
+    private final String ip = "192.168.80.111listen\\";
   //  private String [] interim;
     
     public Client_socket()
