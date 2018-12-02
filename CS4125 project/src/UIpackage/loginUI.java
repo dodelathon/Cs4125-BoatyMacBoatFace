@@ -18,9 +18,7 @@ import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.event.Event;
 
-public class loginUI extends Application implements UI {
-    String sampleUsername = "sDonnelly";
-    String samplePassword = "309e509b879dccb653c53f432a2098ea2a31386f8f33080e516ad53939e120316648e88b9c368fdc477d4eccd22599ed5e2ebf2b87f7beac1d63d38c95eacb0e";
+public class loginUI extends Application {
     String checkUname, checkPword;
     private final Client_socket cS = new Client_socket();
     public loginUI() 
@@ -121,19 +119,4 @@ public class loginUI extends Application implements UI {
         loginStage.show();
         
     }   
-
-    @Override
-    public String getUname() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getPassword() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setPassword(String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

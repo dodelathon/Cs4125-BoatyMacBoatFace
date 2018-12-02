@@ -22,6 +22,7 @@ public class Client_socket
     private PrintWriter out = null;
     private BufferedReader in = null;
     private InetAddress ip;
+
     
     public Client_socket()
     {
