@@ -17,7 +17,7 @@ public class Availibility_Filter
     private ArrayList<appUsers> online;
     private ArrayList<appUsers> matchable;
     private final MySqlAccess a;
-    private Availibility_Filter me;
+    private static Availibility_Filter me;
     
     private Availibility_Filter()
     {
@@ -25,7 +25,7 @@ public class Availibility_Filter
         online = new ArrayList<>();
     }
     
-    public Availibility_Filter getInstance()
+    public static Availibility_Filter getInstance()
     {
         if(me == null)
         {

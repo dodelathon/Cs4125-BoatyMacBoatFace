@@ -22,11 +22,11 @@ public class Leagues
     private Leagues()
     {
         wood = 0;
-        bronze = 200;
-        silver = 400;
-        gold = 600;
-        platinum = 800;
-        diamond = 1000;
+        bronze = 400;
+        silver = 800;
+        gold = 1200;
+        platinum = 1600;
+        diamond = 2000;
     }
     
     public static Leagues getInstance()
