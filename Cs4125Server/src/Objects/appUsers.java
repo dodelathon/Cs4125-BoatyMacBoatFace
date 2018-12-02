@@ -62,8 +62,26 @@ public abstract class appUsers implements MatchMakerTable_User
     }
     
     @Override
-    public void set_OStat(boolean oStat)
+    public void set_OStat(int oStat)
     {
-        
+        online = oStat;
+    }
+    
+    @Override
+    public void set_QStat(int qStat)
+    {   
+        queued = qStat;
+    }
+    
+    @Override
+    public void setId(int id)
+    {
+        uID = id;
+    }
+    
+    @Override
+    public void setRating(int nElo)
+    {
+        rating = nElo;
     }
 }

@@ -10,6 +10,10 @@ public class Player extends appUsers
     {
         
         setUsername(uName);
+        setId(id);
+        setRating(nElo);
+        set_OStat(oStat);
+        set_QStat(qStat);
         
     }
     

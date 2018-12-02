@@ -13,10 +13,10 @@ interface MatchMakerTable_User
         public void setUsername(String uName);
         
         public boolean is_online();
-        public void set_OStat(boolean oStat);
+        public void set_OStat(int oStat);
         
         public boolean is_queued();
-        public void set_QStat(boolean qStat);
+        public void set_QStat(int qStat);
         
         
         
