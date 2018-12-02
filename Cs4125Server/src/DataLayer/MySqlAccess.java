@@ -230,6 +230,13 @@ public final class MySqlAccess
       return writeResultSet(resultSet, 3);
   }
   
+  public String getOnlinePlayers() throws SQLException
+  {
+      preparedStatement  = connect.prepareStatement("select * matchmaker_info where is_online = 1");
+      resultSet = preparedStatement.executeQuery();
+      return writeResultSet(resultSet, 3);
+  }
+  
   public String readAllFromDB(String Db) throws Exception 
   {
     try 

@@ -1,6 +1,8 @@
 package UIpackage;
 
 import Objects.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -9,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.event.*;
 
 /**
  *
@@ -39,7 +42,7 @@ public class applicationUI  {
             currentUser.setUsername(userDetails[1]);
         }
         System.out.println(currentUser.getUsername());
-        appS.setTitle("Game Lobby");
+        appS.setTitle("Main Menu");
         BorderPane bPane = new BorderPane();
         bPane.setPadding(new Insets(10,50,50,50));
         HBox hb = new HBox();
@@ -61,10 +64,75 @@ public class applicationUI  {
         bPane.setTop(hb);
         bPane.setCenter(gPane);
         Scene appScene = new Scene(bPane);
+        appScene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
         appS.setScene(appScene);
         appS.setResizable(false);
-        appS.show();       
+        appS.show();     
         
+        viewLeaderboardbtn.setOnAction(new EventHandler() 
+        {
+            @Override
+            public void handle(Event event)
+            {
+                try 
+                {
+                    leaderboardUI leaderboard = new leaderboardUI();
+                } 
+                catch (Exception ex) {
+                    Logger.getLogger(applicationUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+              
+            }
+        });
+               
+        startGamebtn.setOnAction(new EventHandler() 
+        {
+            @Override
+            public void handle(Event event)
+            {
+                gameScreenUI gameScreen = new gameScreenUI();
+                try 
+                {
+                    gameScreen.gameScreenUI();
+                } 
+                catch (Exception ex) 
+                {
+                    Logger.getLogger(applicationUI.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        });
+        
+         changeRatingbtn.setOnAction(new EventHandler() 
+         {
+            @Override
+            public void handle(Event event)
+            {
+                try 
+                {
+                     changeRatingUI changeRating = new changeRatingUI();
+                } 
+                catch (Exception ex) 
+                {
+                    Logger.getLogger(applicationUI.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        });
+        
+        logoutbtn.setOnAction(new EventHandler() 
+        {
+            @Override
+            public void handle(Event event)
+            {
+                try 
+                {
+                    loginStage.show();
+                    appS.hide();
+                } 
+                catch (Exception ex) 
+                {
+                    Logger.getLogger(applicationUI.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        });
     }
-    
 }

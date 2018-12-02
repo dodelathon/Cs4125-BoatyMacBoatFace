@@ -86,6 +86,8 @@ public class loginUI extends Application implements UI {
                         applicationUI app = new applicationUI();
                         app.applicationUI(loginStage, dataElements);
                         System.out.println("logged in!!");
+                                        loginStage.hide();
+
                     }
                 }
                 else
@@ -114,7 +116,7 @@ public class loginUI extends Application implements UI {
         Scene scene = new Scene(bPane);
         scene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
         loginStage.setScene(scene);
-        loginStage.titleProperty().bind(scene.widthProperty().asString().concat(" : ").concat(scene.heightProperty().asString()));
+        //loginStage.titleProperty().bind(scene.widthProperty().asString().concat(" : ").concat(scene.heightProperty().asString()));
         loginStage.setResizable(false);
         loginStage.show();
         

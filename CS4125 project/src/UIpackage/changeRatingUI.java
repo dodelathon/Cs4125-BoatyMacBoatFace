@@ -20,23 +20,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+
 /**
  *
- * @author seani
+ * @author hilto
  */
-public class leaderboardUI 
+public class changeRatingUI 
 {
     
-    public leaderboardUI() throws Exception
+
+    public changeRatingUI() throws Exception
     {
-       Stage leaderboardS = new Stage();
-       leaderboardStart (leaderboardS);
+       Stage changeRatingS = new Stage();
+       changeRatingStart (changeRatingS);
     }
 
     
-    public void leaderboardStart(Stage leaderboardStage)
+    public void changeRatingStart(Stage changeRatingStage)
     {
-        leaderboardStage.setTitle("Leaderboard");
+        changeRatingStage.setTitle("Change Rating");
          
         System.out.print ("Yah boi is here");
         
@@ -51,22 +53,27 @@ public class leaderboardUI
         gPane.setHgap(80);
         gPane.setVgap(100);
         
-        Button backBtn = new Button("Back");
+        Button enterBtn = new Button("Enter");
+        Label newRating = new Label("New Rating");
+        final TextField newRatingText = new TextField();
         
-        gPane.add(backBtn, 3, 5);
+        
+        gPane.add(enterBtn, 3, 5);
+        gPane.add(newRating, 0, 0);
+        gPane.add(newRatingText, 1, 0);
      
         bPane.setId("bPane");
         gPane.setId("root");
-        backBtn.setId("Btn");
+        enterBtn.setId("Btn");
         
         bPane.setTop(hb);
         bPane.setCenter(gPane);
-        Scene leaderboardScene = new Scene(bPane);
-        leaderboardScene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
-        leaderboardStage.setScene(leaderboardScene);
+        Scene changeRatingScene = new Scene(bPane);
+        changeRatingScene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
+        changeRatingStage.setScene(changeRatingScene);
         //leaderboardStage.titleProperty().bind(scene.widthProperty().asString().concat(" : ").concat(scene.heightProperty().asString()));
-        leaderboardStage.setResizable(false);
-        leaderboardStage.show();
+        changeRatingStage.setResizable(false);
+        changeRatingStage.show();
         
     }
 }

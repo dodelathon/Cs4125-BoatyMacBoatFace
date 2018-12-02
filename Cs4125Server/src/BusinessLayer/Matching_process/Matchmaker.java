@@ -20,6 +20,7 @@ public class Matchmaker
     private final MySqlAccess a;
     private static Matchmaker me;
     private ArrayList<Player> matchable;
+    private ArrayList<Player> online;
     private Leagues league;
     
     
@@ -45,7 +46,7 @@ public class Matchmaker
         try
         {
             interim = a.getQueuedPlayers().trim().split(",");
-            for(int i = 0; i < interim.length; i++)
+            for(int i = 0; i < interim.length - 4; i += 5)
             {
                 
             }
@@ -55,4 +56,23 @@ public class Matchmaker
             
         }
     }
+    
+    public void findOnline()
+    {
+        String[] interim;
+        try
+        {
+            interim = a.getOnlinePlayers().trim().split(",");
+            for(int i = 0; i < interim.length - 4; i += 5)
+            {
+                
+            }
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }
+    
+    
 }
