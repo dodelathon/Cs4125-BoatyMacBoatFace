@@ -40,8 +40,6 @@ CREATE TABLE `login_info` (
 -- Dumping data for table `login_info`
 --
 
-
-
 CREATE TABLE `matchmaker_info` (
   `userIDMatch` int(11) NOT NULL,
   `usernameMatch` varchar(30) NOT NULL,
@@ -79,14 +77,7 @@ CREATE TABLE `matches` (
 
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `matchmaker_info`
---
-
-
-
 INSERT INTO `login_info` (`userIDLog`, `usernameLog`, `password`, `isDev`) VALUES
 (3, 'hi', 'hi', 0),
 (4, 'beep', 'shabalabadingdong', 0),
@@ -99,3 +90,5 @@ INSERT INTO `login_info` (`userIDLog`, `usernameLog`, `password`, `isDev`) VALUE
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+

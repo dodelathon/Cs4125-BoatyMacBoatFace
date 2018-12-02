@@ -6,6 +6,10 @@
 package UIpackage;
 
 import Data_Layer.Client_socket;
+import Objects.Player;
+import javax.swing.JOptionPane;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -86,18 +90,32 @@ public class changeRatingUI
             {
                 try 
                 {
+                    List<Player> players = new ArrayList<Player>();
                     if (userDetails[2].equals("1"))
                     {
                         Client_socket proxy = new Client_socket();
                         String matchMaker;
-                        
+                        String dataLine = "";
                         matchMaker = proxy.sendInfo("getAll,matchmaker_info");
                         String [] interim = matchMaker.split(",");
-                        
+                        String [] objectData = new String[5];
+                       
                         for(int i = 0; i < interim.length - 5; i += 5)
                         {
-                            
+                           dataLine += interim[i];
+                           
+                           if(i % 4 == 0)
+                           {
+                               objectData = dataLine.split(",");
+                               Player player = new Player(objectData[0], objectData[1], objectData[2]);
+                               players.add(player);
+                               dataLine = "";
+                           }
                         }
+                        Object[] allPlayers = players.toArray();
+                        String input = (String) JOptionPane.showInputDialog(null, "Change Rating", "Choose a User to change Rating", JOptionPane.QUESTION_MESSAGE, null, allPlayers,allPlayers[1]);
+                        
+                        System.out.print(input);
                     }
                     else
                     {
