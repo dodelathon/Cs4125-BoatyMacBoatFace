@@ -1,8 +1,6 @@
 package UIpackage;
 import Authentication.loginEncryption;
 import Data_Layer.Client_socket;
-import java.awt.event.ActionListener;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -10,38 +8,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Reflection;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.application.Application;
 import javafx.event.Event;
-import javax.xml.transform.Source;
 
 /**
  *
  * @author seani
  */
-public class registrationUI implements UI {
-
-    @Override
-    public String getUname() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getPassword() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setPassword(String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+public class registrationUI{
+    
     public void registrationUI() {
         
     }
@@ -94,9 +72,5 @@ public class registrationUI implements UI {
         registerStage.setResizable(false);
         registerStage.show();
 
-    }
-    
-
-
-    
+    }   
 }
