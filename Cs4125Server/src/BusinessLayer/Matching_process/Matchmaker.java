@@ -19,8 +19,7 @@ public class Matchmaker
 {
     private final MySqlAccess a;
     private static Matchmaker me;
-    private ArrayList<Player> matchable;
-    private ArrayList<Player> online;
+    private ArrayList<appUsers> matchable;
     private Leagues league;
     
     
@@ -40,38 +39,10 @@ public class Matchmaker
         return me;
     }
     
-    public void findQueued()
+    public String matchingProcess(int id)
     {
-        String[] interim;
-        try
-        {
-            interim = a.getQueuedPlayers().trim().split(",");
-            for(int i = 0; i < interim.length - 4; i += 5)
-            {
-                
-            }
-        }
-        catch(Exception e)
-        {
-            
-        }
-    }
-    
-    public void findOnline()
-    {
-        String[] interim;
-        try
-        {
-            interim = a.getOnlinePlayers().trim().split(",");
-            for(int i = 0; i < interim.length - 4; i += 5)
-            {
-                
-            }
-        }
-        catch(Exception e)
-        {
-            
-        }
+        
+        return "";
     }
     
     

@@ -48,8 +48,14 @@ public final class MySqlAccess
             preparedStatement.setString(1, uName);
             preparedStatement.setString(2, password);
             preparedStatement.executeUpdate();
-            insertRowIntoMatchmakingInfo(uName, 0);
-            return true;
+            if(insertRowIntoMatchmakingInfo(uName, 0) == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else if(isDev == 1)
         {
@@ -58,8 +64,14 @@ public final class MySqlAccess
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, isDev + "");
             preparedStatement.executeUpdate();
-            insertRowIntoMatchmakingInfo(uName, 0);
-            return true;
+            if(insertRowIntoMatchmakingInfo(uName, 0) == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
@@ -72,14 +84,29 @@ public final class MySqlAccess
       }
   }
   
-  private void insertRowIntoMatchmakingInfo(String uName, double rating) throws Exception
+  private boolean insertRowIntoMatchmakingInfo(String uName, double rating) 
   {
-      
-    preparedStatement = connect.prepareStatement("insert into matchmaker_info values (LAST_INSERT_ID(), ?, ?, default)");
-    preparedStatement.setString(1, uName );
-    preparedStatement.setString(2, rating + "");
-    preparedStatement.executeUpdate();
-    System.out.println("User has been added to the Matchmaking Database!");
+    System.out.println("here");
+    try
+    {
+        preparedStatement = connect.prepareStatement("insert into matchmaker_info values (LAST_INSERT_ID(), ?, ?, default, default)");
+        preparedStatement.setString(1, uName );
+        preparedStatement.setString(2, rating + "");
+        if(preparedStatement.executeUpdate() == 0)
+        {
+            return false; 
+        }
+        else 
+        {
+            return true;
+        }
+    }
+    catch(Exception e)
+    {
+        System.out.println(e.getMessage());
+        return false;
+    }
+    
   }
  
   public String searchDBByID(int id, String db) throws Exception

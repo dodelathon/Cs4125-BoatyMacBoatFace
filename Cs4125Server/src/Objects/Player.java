@@ -9,11 +9,11 @@ public class Player extends appUsers
     public Player(int id, String uName, int nElo, int oStat, int qStat)
     {
         
-        setUsername(uName);
-        setId(id);
-        setRating(nElo);
-        set_OStat(oStat);
-        set_QStat(qStat);
+        this.setUsername(uName);
+        this.setId(id);
+        this.setRating(nElo);
+        this.set_OStat(oStat);
+        this.set_QStat(qStat);
         
     }
     
