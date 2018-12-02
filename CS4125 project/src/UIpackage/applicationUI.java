@@ -109,7 +109,16 @@ public class applicationUI  {
             {
                 try 
                 {
-                     changeRatingUI changeRating = new changeRatingUI();
+                    if (userDetails[2].equals("1"))
+                    {
+                        changeRatingUI changeRating = new changeRatingUI();
+                        changeRating.changeRatingStart(changeRating.getStage(), userDetails);
+                    }
+                    else
+                    {
+                        changeRatingUI changeRating = new changeRatingUI();
+                        changeRating.changeRatingStart(changeRating.getStage(), userDetails);
+                    }
                 } 
                 catch (Exception ex) 
                 {

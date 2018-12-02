@@ -6,7 +6,11 @@
 package UIpackage;
 
 import Data_Layer.Client_socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +23,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import Data_Layer.Client_socket;
 
 
 /**
@@ -27,20 +32,19 @@ import javafx.stage.Stage;
  */
 public class changeRatingUI 
 {
-    
+    private Stage changeRatingS;
 
     public changeRatingUI() throws Exception
     {
-       Stage changeRatingS = new Stage();
-       changeRatingStart (changeRatingS);
+       this.changeRatingS = new Stage();
+       //changeRatingStart (changeRatingS);
     }
 
     
-    public void changeRatingStart(Stage changeRatingStage)
+    public void changeRatingStart(Stage changeRatingStage, String[] userDetails)
     {
+        
         changeRatingStage.setTitle("Change Rating");
-         
-        System.out.print ("Yah boi is here");
         
         BorderPane bPane = new BorderPane();
         bPane.setPadding(new Insets(20,20,20,20));
@@ -75,6 +79,42 @@ public class changeRatingUI
         changeRatingStage.setResizable(false);
         changeRatingStage.show();
         
+        enterBtn.setOnAction(new EventHandler() 
+         {
+            @Override
+            public void handle(Event event)
+            {
+                try 
+                {
+                    if (userDetails[2].equals("1"))
+                    {
+                        Client_socket proxy = new Client_socket();
+                        String matchMaker;
+                        
+                        matchMaker = proxy.sendInfo("getAll,matchmaker_info");
+                        String [] interim = matchMaker.split(",");
+                        
+                        for(int i = 0; i < interim.length - 5; i += 5)
+                        {
+                            
+                        }
+                    }
+                    else
+                    {
+                        changeRatingUI changeRating = new changeRatingUI();
+                    }
+                } 
+                catch (Exception ex) 
+                {
+                    Logger.getLogger(applicationUI.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        });
+    }
+    
+    Stage getStage()
+    {
+        return this.changeRatingS;
     }
 }
 
