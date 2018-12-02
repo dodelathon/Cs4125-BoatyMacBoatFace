@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs4125server;
+package BusinessLayer.Client_Handling;
 
+import DataLayer.MySqlAccess;
+import DataLayer.MySqlAccess;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,14 +17,14 @@ import java.net.Socket;
  *
  * @author donal
  */
-class doComms implements Runnable 
+public class doComms extends Thread 
 {
     private Socket server;
     private String line, output;
     private final String  p1, p2;
     private MySqlAccess conn;
 
-    doComms(Socket server) 
+    public doComms(Socket server) 
     {
       this.server = server;
       p1 = "[A-Za-z]{1,30}";
@@ -123,14 +125,26 @@ class doComms implements Runnable
                             output = "Incorrect amount arguments!";
                         }
                     break;
+                    case "setqueued":
+                        if(interim.length == 3)
+                        {
+                            setQueued(Integer.parseInt(interim[1].trim()), Integer.parseInt(interim[2].trim()));
+                        }
+                        else
+                        {
+                            output = "Incorrect amount arguments!";
+                        }
+                    break;
+                                
+                            
                 }
                 out.println(output);
             }
         }
       } 
-      catch (IOException ioe) 
+      catch (IOException e) 
       {
-        System.out.println("IOException on socket listen: " + ioe);
+        System.out.println("Client has disconnected");
       }
     }
     
@@ -215,6 +229,20 @@ class doComms implements Runnable
         {
             output = "Failed";
         }
+    }
+    
+    private void setQueued(int uID, int QueuedState)
+    {
+        try
+        {
+            conn.updateQueuedStatus(uID, QueuedState);
+            output = "success";
+        }
+        catch(Exception e)
+        {
+            output = "Failed";
+        }
+                
     }
     
     private MySqlAccess connect()

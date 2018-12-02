@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs4125server;
+package DataLayer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -101,6 +101,15 @@ public final class MySqlAccess
         preparedStatement.setString(2, id + "");
         resultSet = preparedStatement.executeQuery();
         res = writeResultSet(resultSet, 2);
+        return res;
+      }
+      else if(db.equalsIgnoreCase("matches"))
+      {
+        preparedStatement = connect.prepareStatement("SELECT * from ? where gID=?");
+        preparedStatement.setString(1, db);
+        preparedStatement.setInt(2, id);
+        resultSet = preparedStatement.executeQuery();
+        res = writeResultSet(resultSet, 3);
         return res;
       }
       else
@@ -206,11 +215,27 @@ public final class MySqlAccess
       preparedStatement.executeUpdate();
   }
   
+  public void updateQueuedStatus(int playerID, int status) throws SQLException
+  {
+      preparedStatement  = connect.prepareStatement("update matchmaker_info set queued = ? where userIDMatch = ?");
+      preparedStatement.setString(1, status + "");
+      preparedStatement.setString(2, playerID + "");
+      preparedStatement.executeUpdate();
+  }
+  
+  public String getQueuedPlayers() throws SQLException
+  {
+      preparedStatement  = connect.prepareStatement("select * matchmaker_info where queued = 1");
+      resultSet = preparedStatement.executeQuery();
+      return writeResultSet(resultSet, 3);
+  }
+  
   public String readAllFromDB(String Db) throws Exception 
   {
     try 
     {
       // Result set get the result of the SQL query
+      Db = Db.toLowerCase();
       resultSet = statement.executeQuery("select * from " + Db);
       if(Db.equalsIgnoreCase("login_info"))
       {
@@ -219,6 +244,10 @@ public final class MySqlAccess
       else if(Db.equalsIgnoreCase("matchmaker_info"))
       {
           return writeResultSet(resultSet, 2);
+      }
+      else if(Db.equalsIgnoreCase("matches"))
+      {
+          return writeResultSet(resultSet, 3);
       }
       else 
       {
@@ -230,6 +259,31 @@ public final class MySqlAccess
     {
        return e.getMessage();
     }
+  }
+  
+  public String newGame(String p1, String p1name, String p2, String p2name, String p3, String p3name, String p4, String p4name, String p5, String p5name )
+  {
+      try
+      {
+        preparedStatement = connect.prepareStatement("insert into matches values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        preparedStatement.setString(1, p1 );
+        preparedStatement.setString(2, p1name);
+        preparedStatement.setString(3, p2);
+        preparedStatement.setString(4, p2name);
+        preparedStatement.setString(5, p3);
+        preparedStatement.setString(6, p3name);
+        preparedStatement.setString(7, p4);
+        preparedStatement.setString(8, p4name);
+        preparedStatement.setString(9, p5);
+        preparedStatement.setString(10, p5name);
+        int executeUpdate = preparedStatement.executeUpdate();
+        return executeUpdate + "";
+      }
+      catch(Exception e)
+      {
+          return "Unable to add new Game";
+      }
+      
   }
   
   public void deleteUser(String user) throws Exception
@@ -273,10 +327,35 @@ public final class MySqlAccess
                 String Uname = resultSet.getString("usernameMatch");
                 String rating = resultSet.getString("rating");
                 String online = resultSet.getString("is_online");
+                String queued = resultSet.getString("queued");
                 //System.out.println("ID: " + id +" | Username: " + Uname + " | Rating: " + rating + " | Online status: " + online );
-                hold += id + "," + Uname + "," + rating + "," + online + "\n";
+                hold += id + "," + Uname + "," + rating + "," + online +  "," + queued +",";
             } 
-            break; 
+            break;
+            
+        case 3:
+            while(resultSet.next())
+            {
+                String gID = resultSet.getString("MatchID");
+                
+                String P1ID = resultSet.getString("p1");
+                String P1Name = resultSet.getString("p1Name");
+                
+                String P2ID = resultSet.getString("p2");
+                String P2Name = resultSet.getString("p2Name");
+                
+                String P3ID = resultSet.getString("p3");
+                String P3Name = resultSet.getString("p3Name");
+                
+                String P4ID = resultSet.getString("p4");
+                String P4Name = resultSet.getString("p4Name");
+                
+                String P5ID = resultSet.getString("p5");
+                String P5Name = resultSet.getString("p5Name");
+                
+                hold += gID + "," + P1ID + "," + P1Name + "," + P2ID + "," + P2Name + "," + P3ID  + P3Name + "," + P4ID + "," + P4Name + "," + P5ID + "," + P5Name + ",";
+            }
+            break;
         }
     return hold;
   }

@@ -5,6 +5,7 @@
  */
 package cs4125server;
 
+import BusinessLayer.Client_Handling.*;
 import java.io.*;
 import java.net.*;
 import java.security.*;
@@ -41,9 +42,8 @@ public class Cs4125Server
       while((i++ < maxConnections) || (maxConnections == 0))
       {
         server = listener.accept();
-        doComms conn_c= new doComms(server);
-        Thread t = new Thread(conn_c);
-        t.start();
+        doComms conn_c = new doComms(server);
+        conn_c.start();
         System.out.println(i);
       }
     } 
