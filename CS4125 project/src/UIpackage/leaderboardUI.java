@@ -69,36 +69,6 @@ public class leaderboardUI
         leaderboardStage.setScene(scene);
         leaderboardStage.show();
         
-       /* BorderPane bPane = new BorderPane();
-        bPane.setPadding(new Insets(20,20,20,20));
-        
-        HBox hb = new HBox();
-        hb.setPadding(new Insets(0,0,0,0));
-        
-        GridPane gPane = new GridPane();
-        gPane.setPadding(new Insets(20,20,20,20));
-        gPane.setHgap(80);
-        gPane.setVgap(100);
-        
-        Button backBtn = new Button("Back");
-        
-        gPane.add(backBtn, 3, 5);
-     
-        bPane.setId("bPane");
-        gPane.setId("root");
-        backBtn.setId("Btn");
-        
-        bPane.setTop(hb);
-        bPane.setCenter(gPane);
-        Scene leaderboardScene = new Scene(bPane);
-        leaderboardScene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
-        leaderboardStage.setScene(leaderboardScene);
-        //leaderboardStage.titleProperty().bind(scene.widthProperty().asString().concat(" : ").concat(scene.heightProperty().asString()));
-        leaderboardStage.setResizable(false);*/
-        
-        
-        //leaderboardStage.show();
-        
     } 
     private ObservableList<Player> getPlayerList() 
     {

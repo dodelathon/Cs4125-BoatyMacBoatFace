@@ -23,6 +23,7 @@ public class Availibility_Filter
     {
         a = MySqlAccess.getInstance();
         online = new ArrayList<>();
+        matchable = new ArrayList<>();
     }
     
     public static Availibility_Filter getInstance()
@@ -41,17 +42,17 @@ public class Availibility_Filter
             findOnline();
             for(MatchMaker_appUsers x : online)
             {
-                if(x.is_queued() == true)
+                if(x.is_queued() == 1)
                 {
                     matchable.add(x);               
                 }      
             }
-            return matchable;
         }
         catch(Exception e)
         {
-            return null;
+            System.out.println(e.getMessage());
         }
+        return matchable;
     }
     
     private void findOnline()
@@ -59,6 +60,7 @@ public class Availibility_Filter
         String[] interim;
         try
         {
+            //System.out.println(a.getOnlinePlayers().trim());
             interim = a.getOnlinePlayers().trim().split(",");
             for(int i = 0; i < interim.length - 5; i += 5)
             {

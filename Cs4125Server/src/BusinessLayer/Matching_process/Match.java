@@ -14,8 +14,8 @@ import DataLayer.MySqlAccess;
  */
 public class Match 
 {
-    private ArrayList<Integer> pIDs;
-    private ArrayList <String> pNames;
+    public ArrayList<Integer> pIDs;
+    public ArrayList <String> pNames;
     private MySqlAccess a;
     
     public Match()
@@ -25,22 +25,17 @@ public class Match
         a = MySqlAccess.getInstance();
     }
     
-    public int[] AddPlayer(int id, String uname)
+    public int AddPlayer(int id, String uname)
     {
         int gid = -1;
-        int[] ret = new int[2];
+        int ret;
         if(pIDs.size() < 5)
         {
             pIDs.add(id);
             pNames.add(uname);
         }
-        else
-        {
-           gid = a.newGame(pIDs.get(0), pNames.get(0), pIDs.get(1), pNames.get(1), pIDs.get(2), pNames.get(2), pIDs.get(3), pNames.get(3), pIDs.get(4), pNames.get(4));
-        }
         
-        ret[0] = pIDs.size();
-        ret[1] = gid;
+        ret = pIDs.size();
         return ret;
     }   
 }

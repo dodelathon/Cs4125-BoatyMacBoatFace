@@ -31,16 +31,9 @@ public abstract class MatchMaker_appUsers implements MatchMakerTable_User
     }
     
     @Override
-    public boolean is_online()
+    public int is_online()
     {
-        if(online == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return online;
     }
     
     /**
@@ -49,16 +42,9 @@ public abstract class MatchMaker_appUsers implements MatchMakerTable_User
      * @Boolean
      */
     @Override
-    public boolean is_queued()
+    public int is_queued()
     {
-        if(queued == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+       return queued;
     }
     
     @Override

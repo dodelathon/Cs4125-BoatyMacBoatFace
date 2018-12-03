@@ -76,6 +76,7 @@ public class loginUI extends Application {
                 checkPword = passF.getText();
                 String passed = "getuser" + "," + checkUname + "," + "login_info";
                 String userData = cS.sendInfo(passed);
+                System.out.println(userData);
                 if (!userData.equalsIgnoreCase("Invalid input"))
                 {
                     dataElements = userData.split(",");

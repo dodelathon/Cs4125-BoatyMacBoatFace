@@ -323,7 +323,7 @@ public final class MySqlAccess
   {
       try
       {
-        preparedStatement = connect.prepareStatement("insert into matches values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        preparedStatement = connect.prepareStatement("insert into matches values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         preparedStatement.setInt(1, p1 );
         preparedStatement.setString(2, p1name);
         preparedStatement.setInt(3, p2);
@@ -339,7 +339,9 @@ public final class MySqlAccess
       }
       catch(Exception e)
       {
+          System.out.println(e.toString());
           return 0;
+          
       }
       
   }
@@ -412,7 +414,7 @@ public final class MySqlAccess
                 String P5ID = resultSet.getString("p5");
                 String P5Name = resultSet.getString("p5Name");
                 
-                hold += gID + "," + P1ID + "," + P1Name + "," + P2ID + "," + P2Name + "," + P3ID  + P3Name + "," + P4ID + "," + P4Name + "," + P5ID + "," + P5Name + ",";
+                hold += gID + "," + P1ID + "," + P1Name + "," + P2ID + "," + P2Name + "," + P3ID  +","+ P3Name + "," + P4ID + "," + P4Name + "," + P5ID + "," + P5Name + ",";
             }
             break;
         }
