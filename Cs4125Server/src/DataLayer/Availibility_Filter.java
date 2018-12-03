@@ -14,8 +14,8 @@ import java.util.ArrayList;
  */
 public class Availibility_Filter 
 {
-    private ArrayList<appUsers> online;
-    private ArrayList<appUsers> matchable;
+    private ArrayList<MatchMaker_appUsers> online;
+    private ArrayList<MatchMaker_appUsers> matchable;
     private final MySqlAccess a;
     private static Availibility_Filter me;
     
@@ -34,12 +34,12 @@ public class Availibility_Filter
         return me;
     }
     
-    public ArrayList<appUsers> findQueued()
+    public ArrayList<MatchMaker_appUsers> findQueued()
     {
         try
         {
             findOnline();
-            for(appUsers x : online)
+            for(MatchMaker_appUsers x : online)
             {
                 if(x.is_queued() == true)
                 {
@@ -70,7 +70,7 @@ public class Availibility_Filter
                     int onl = Integer.parseInt(interim[i + 3]);
                     int queued = Integer.parseInt(interim[i + 4]);
                     
-                    online.add(new Player(id, username, elo, onl, queued));
+                    online.add(new MatchMaker_Player(id, username, elo, onl, queued));
                 }
             }
         }
@@ -78,7 +78,5 @@ public class Availibility_Filter
         {
             System.out.println("Unable to handle query");
         }
-    }
-    
-    
+    } 
 }

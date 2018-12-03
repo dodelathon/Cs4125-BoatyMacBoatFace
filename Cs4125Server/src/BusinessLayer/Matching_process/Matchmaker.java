@@ -18,7 +18,7 @@ public class Matchmaker
 {
     private final MySqlAccess a;
     private static Matchmaker me;
-    private ArrayList<appUsers> matchable;
+    private ArrayList<MatchMaker_appUsers> matchable;
     private final Leagues league;
     private final Availibility_Filter avail;
     private final int AMOUNTOFTIERS = 6;
@@ -53,7 +53,7 @@ public class Matchmaker
         }
         try
         {
-            for(appUsers x : matchable)
+            for(MatchMaker_appUsers x : matchable)
             {
                 if(x.getRating() <= league.getWood() + 200)
                 {
@@ -123,6 +123,4 @@ public class Matchmaker
         String hold = a.readAllFromDB("matches");
         return hold;
     }
-    
-    
 }

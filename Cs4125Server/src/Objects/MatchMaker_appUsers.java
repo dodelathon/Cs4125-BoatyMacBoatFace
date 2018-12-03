@@ -1,6 +1,6 @@
 package Objects;
 
-public abstract class appUsers implements MatchMakerTable_User 
+public abstract class MatchMaker_appUsers implements MatchMakerTable_User 
 {
     private String username;
     private int online;

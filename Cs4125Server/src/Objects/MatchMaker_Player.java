@@ -1,12 +1,12 @@
 package Objects;
 
-public class Player extends appUsers
+public class MatchMaker_Player extends MatchMaker_appUsers
 {
-    public Player()
+    public MatchMaker_Player()
     {
     
     }
-    public Player(int id, String uName, int nElo, int oStat, int qStat)
+    public MatchMaker_Player(int id, String uName, int nElo, int oStat, int qStat)
     {
         
         this.setUsername(uName);
