@@ -96,10 +96,10 @@ public class applicationUI  {
             @Override
             public void handle(Event event)
             {
-                gameScreenUI gameScreen = new gameScreenUI();
+                
                 try 
                 {
-                    gameScreen.gameScreenUI();
+                    LobbyList gameScreen = new LobbyList();
                 } 
                 catch (Exception ex) 
                 {

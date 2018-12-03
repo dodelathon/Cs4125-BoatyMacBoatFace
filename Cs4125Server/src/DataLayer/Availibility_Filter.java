@@ -66,7 +66,7 @@ public class Availibility_Filter
                 {
                     int id = Integer.parseInt(interim[i]);
                     String username = interim[i + 1];
-                    int elo = Integer.parseInt(interim[i + 2]);
+                    double elo = Double.parseDouble(interim[i + 2]);
                     int onl = Integer.parseInt(interim[i + 3]);
                     int queued = Integer.parseInt(interim[i + 4]);
                     
@@ -77,6 +77,7 @@ public class Availibility_Filter
         catch(Exception e)
         {
             System.out.println("Unable to handle query");
+            System.out.println(e.getMessage());
         }
     } 
 }

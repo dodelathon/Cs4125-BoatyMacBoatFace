@@ -127,7 +127,7 @@ public final class MySqlAccess
       }
       else if(db.equalsIgnoreCase("matches"))
       {
-        preparedStatement = connect.prepareStatement("SELECT * from ? where gID=?");
+        preparedStatement = connect.prepareStatement("SELECT * from ? where MatchID=?");
         preparedStatement.setString(1, db);
         preparedStatement.setInt(2, id);
         resultSet = preparedStatement.executeQuery();
@@ -246,18 +246,46 @@ public final class MySqlAccess
       preparedStatement.executeUpdate();
   }
   
+  public void queueAll()
+  {
+      try
+      {
+          preparedStatement  = connect.prepareStatement("update matchmaker_info set queued = 1");
+          preparedStatement.executeUpdate();
+      }
+      catch(Exception e)
+      {
+          System.out.println("Failed to update");
+          System.out.println(e.getMessage());
+      }
+  }
+  
+  public void onlineAll()
+  {
+      try
+      {
+          preparedStatement  = connect.prepareStatement("update matchmaker_info set is_online = 1");
+          preparedStatement.executeUpdate();
+      }
+      catch(Exception e)
+      {
+          System.out.println("Failed to update");
+          System.out.println(e.getMessage());
+      }
+  }
+  
   public String getQueuedPlayers() throws SQLException
   {
-      preparedStatement  = connect.prepareStatement("select * matchmaker_info where queued = 1");
+      preparedStatement  = connect.prepareStatement("select * from matchmaker_info where queued = 1");
       resultSet = preparedStatement.executeQuery();
-      return writeResultSet(resultSet, 3);
+      return writeResultSet(resultSet, 2);
   }
   
   public String getOnlinePlayers() throws SQLException
   {
-      preparedStatement  = connect.prepareStatement("select * matchmaker_info where is_online = 1");
+      preparedStatement  = connect.prepareStatement("select * from matchmaker_info where is_online = 1");
       resultSet = preparedStatement.executeQuery();
-      return writeResultSet(resultSet, 3);
+      return writeResultSet(resultSet, 2);
   }
   
   public String readAllFromDB(String Db) 

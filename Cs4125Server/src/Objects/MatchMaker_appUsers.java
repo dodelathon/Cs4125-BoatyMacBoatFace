@@ -5,7 +5,7 @@ public abstract class MatchMaker_appUsers implements MatchMakerTable_User
     private String username;
     private int online;
     private int queued;
-    private int rating;
+    private double rating;
     private int uID;
     
     @Override
@@ -14,7 +14,7 @@ public abstract class MatchMaker_appUsers implements MatchMakerTable_User
         return username;
     }
     @Override
-    public int getRating()
+    public double getRating()
     {
         return rating;
     }
@@ -80,7 +80,7 @@ public abstract class MatchMaker_appUsers implements MatchMakerTable_User
     }
     
     @Override
-    public void setRating(int nElo)
+    public void setRating(double nElo)
     {
         rating = nElo;
     }

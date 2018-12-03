@@ -6,8 +6,8 @@ interface MatchMakerTable_User
 	public int getID();
         public void setId(int nID);
         
-	public int getRating();
-        public void setRating(int nElo);
+	public double getRating();
+        public void setRating(double nElo);
 	
 	public String getUsername();
         public void setUsername(String uName);

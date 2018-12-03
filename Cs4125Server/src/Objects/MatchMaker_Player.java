@@ -6,7 +6,7 @@ public class MatchMaker_Player extends MatchMaker_appUsers
     {
     
     }
-    public MatchMaker_Player(int id, String uName, int nElo, int oStat, int qStat)
+    public MatchMaker_Player(int id, String uName, double nElo, int oStat, int qStat)
     {
         
         this.setUsername(uName);

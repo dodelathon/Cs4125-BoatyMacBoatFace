@@ -45,7 +45,8 @@ public class Matchmaker
     
     public String matchingProcess()
     {
-        
+        a.onlineAll();
+        a.queueAll();
         matchable = avail.findQueued();
         for(Match x: matchTiers)
         {
@@ -121,6 +122,7 @@ public class Matchmaker
             System.out.println(e.getMessage());
         }
         String hold = a.readAllFromDB("matches");
+        System.out.println(hold);
         return hold;
     }
 }

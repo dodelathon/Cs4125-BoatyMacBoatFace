@@ -38,10 +38,11 @@ public class LobbyList
     public void LobbyListStart(Stage lobbyStage)
     {
         TableView<Match_Limit5> table = new TableView<>();
+        ObservableList<Match_Limit5> data = getPlayerList();
         Scene scene = new Scene(new Group());
         lobbyStage.setWidth(450);
         lobbyStage.setHeight(550);
-        lobbyStage.setTitle("Leaderboard");                     
+        lobbyStage.setTitle("Lobbies");                     
        
         
         TableColumn p1 = new TableColumn("Player 1 ID");
@@ -94,8 +95,6 @@ public class LobbyList
         p5n.setCellValueFactory(
                 new PropertyValueFactory<>("p5n"));
 
-        
-        ObservableList<Match_Limit5> data = getPlayerList();
 
         table.setItems(data);
         table.getColumns().addAll(p1, p1n, p2, p2n, p3, p3n, p4, p4n, p5, p5n);
@@ -122,7 +121,7 @@ public class LobbyList
         
         String [] interim = matchMaker.split(",");
  
-     for(int i = 0; i < interim.length - 10; i += 10)
+        for(int i = 0; i < interim.length - 10; i += 10)
         {  
             int p1 = Integer.parseInt(interim[i]);
             int p2 = Integer.parseInt(interim[i + 2]);
