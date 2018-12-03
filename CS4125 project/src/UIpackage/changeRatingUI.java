@@ -126,6 +126,3 @@ public class changeRatingUI
         return this.changeRatingS;
     }
 }
-
-
-   
