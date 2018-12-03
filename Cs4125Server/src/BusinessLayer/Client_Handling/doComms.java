@@ -259,11 +259,6 @@ public class doComms extends Thread
                 
     }
     
-    private void match()
-    {
-        
-    }
-    
     private MySqlAccess connect()
     {
         try

@@ -42,8 +42,5 @@ public class Match
         ret[0] = pIDs.size();
         ret[1] = gid;
         return ret;
-    }
-    
-    
-    
+    }   
 }
