@@ -4,8 +4,10 @@ package Objects;
 interface User
 {
 	public int getID();
+        public void setID(int nID);
         
-	public int getRating();
+	public double getRating();
+        public void setRating(double nElo);
 	
 	public String getUsername();
         public void setUsername(String uName);

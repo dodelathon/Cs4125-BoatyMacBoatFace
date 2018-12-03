@@ -228,6 +228,7 @@ public final class MySqlAccess
   
   public void updateElo(int playerID, double newElo) throws SQLException
   {
+      System.out.println(playerID + " " + newElo);
       preparedStatement  = connect.prepareStatement("update matchmaker_info set rating = ? where userIDMatch = ?");
       preparedStatement.setString(1, newElo + "");
       preparedStatement.setString(2, playerID + "");

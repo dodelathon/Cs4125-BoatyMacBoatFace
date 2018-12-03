@@ -4,7 +4,7 @@ public abstract class appUsers implements User {
     private String name;
     private String username;
     private String password;
-    private int rating;
+    private double rating;
     private int uID;
     
     @Override
@@ -18,7 +18,7 @@ public abstract class appUsers implements User {
         return username;
     }
     @Override
-    public int getRating()
+    public double getRating()
     {
         return rating;
     }
@@ -47,6 +47,17 @@ public abstract class appUsers implements User {
     {
         this.password = password;
     }
+    @Override
+    public void setID(int nID)
+    {
+        this.uID = nID;
+    }
+    @Override
+    public void setRating(double nElo)
+    {
+        this.rating = nElo;
+    }
+    
             
     
 }

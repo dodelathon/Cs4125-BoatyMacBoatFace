@@ -6,9 +6,9 @@ public class Player extends appUsers
     {
     
     }
-    public Player(String id, String uName, String password)
+    public Player(String name, String uName, String password)
     {
-        setName(id);
+        setName(name);
         setUsername(uName);
         setPassword(password);
     }

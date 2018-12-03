@@ -90,36 +90,27 @@ public class changeRatingUI
             {
                 try 
                 {
-                    List<Player> players = new ArrayList<Player>();
-                    if (userDetails[2].equals("1"))
+                    Client_socket proxy = new Client_socket();
+                    try
                     {
-                        Client_socket proxy = new Client_socket();
-                        String matchMaker;
-                        String dataLine = "";
-                        matchMaker = proxy.sendInfo("getAll,matchmaker_info");
-                        String [] interim = matchMaker.split(",");
-                        String [] objectData = new String[5];
-                       
-                        for(int i = 0; i < interim.length - 5; i += 5)
+                        double newElo = 0.00;
+
+                        if(newRatingText.getText() == null)
                         {
-                           dataLine += interim[i];
-                           
-                           if(i % 4 == 0)
-                           {
-                               objectData = dataLine.split(",");
-                               Player player = new Player(objectData[0], objectData[1], objectData[2]);
-                               players.add(player);
-                               dataLine = "";
-                           }
+                            JOptionPane.showMessageDialog(null, "New Rating Blank. Try again");
                         }
-                        Object[] allPlayers = players.toArray();
-                        String input = (String) JOptionPane.showInputDialog(null, "Change Rating", "Choose a User to change Rating", JOptionPane.QUESTION_MESSAGE, null, allPlayers,allPlayers[1]);
-                        
-                        System.out.print(input);
+                        else
+                        {
+                            newElo = Double.parseDouble(newRatingText.getText());
+                            
+                            proxy.sendInfo("setElo," + userDetails[0] + "," + newElo);
+                            
+                            JOptionPane.showMessageDialog(null, "Your Elo was set to " + newElo);
+                        }
                     }
-                    else
+                    catch(Exception idiot)
                     {
-                        changeRatingUI changeRating = new changeRatingUI();
+                        JOptionPane.showMessageDialog(null, "Invalid Input");
                     }
                 } 
                 catch (Exception ex) 
