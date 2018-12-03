@@ -265,7 +265,7 @@ public final class MySqlAccess
       return writeResultSet(resultSet, 3);
   }
   
-  public String readAllFromDB(String Db) throws Exception 
+  public String readAllFromDB(String Db) 
   {
     try 
     {
@@ -296,27 +296,27 @@ public final class MySqlAccess
     }
   }
   
-  public String newGame(String p1, String p1name, String p2, String p2name, String p3, String p3name, String p4, String p4name, String p5, String p5name )
+  public int newGame(int p1, String p1name, int p2, String p2name, int p3, String p3name, int p4, String p4name, int p5, String p5name )
   {
       try
       {
         preparedStatement = connect.prepareStatement("insert into matches values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, p1 );
+        preparedStatement.setInt(1, p1 );
         preparedStatement.setString(2, p1name);
-        preparedStatement.setString(3, p2);
+        preparedStatement.setInt(3, p2);
         preparedStatement.setString(4, p2name);
-        preparedStatement.setString(5, p3);
+        preparedStatement.setInt(5, p3);
         preparedStatement.setString(6, p3name);
-        preparedStatement.setString(7, p4);
+        preparedStatement.setInt(7, p4);
         preparedStatement.setString(8, p4name);
-        preparedStatement.setString(9, p5);
+        preparedStatement.setInt(9, p5);
         preparedStatement.setString(10, p5name);
         int executeUpdate = preparedStatement.executeUpdate();
-        return executeUpdate + "";
+        return executeUpdate;
       }
       catch(Exception e)
       {
-          return "Unable to add new Game";
+          return 0;
       }
       
   }
@@ -337,6 +337,7 @@ public final class MySqlAccess
       return interim[2].trim();
   }
 
+  
   private String writeResultSet(ResultSet resultSet, int db) throws SQLException 
   {
     // ResultSet is initially before the first data set

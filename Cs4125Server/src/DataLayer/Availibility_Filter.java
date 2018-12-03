@@ -38,6 +38,7 @@ public class Availibility_Filter
     {
         try
         {
+            findOnline();
             for(appUsers x : online)
             {
                 if(x.is_queued() == true)
@@ -53,7 +54,7 @@ public class Availibility_Filter
         }
     }
     
-    public void findOnline()
+    private void findOnline()
     {
         String[] interim;
         try
@@ -68,6 +69,7 @@ public class Availibility_Filter
                     int elo = Integer.parseInt(interim[i + 2]);
                     int onl = Integer.parseInt(interim[i + 3]);
                     int queued = Integer.parseInt(interim[i + 4]);
+                    
                     online.add(new Player(id, username, elo, onl, queued));
                 }
             }

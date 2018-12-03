@@ -140,9 +140,9 @@ public class doComms extends Thread
                         }
                     break;
                     case "match":
-                        if(interim.length == 3)
+                        if(interim.length == 1)
                         {
-                            match.matchingProcess(Integer.parseInt(interim[1]), interim[2]);
+                            output = match.matchingProcess();
                         }
                         else
                         {
